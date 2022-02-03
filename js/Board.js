@@ -10,7 +10,7 @@ export default class Board {
     this.board = []
     this.words = dictionary.filter(word => word.length === this.size)
     this.random = Math.floor(Math.random() * this.words.length)
-    this.word = this.words[this.random] // Should be a random word of the given size, fixed for now
+    this.word = this.words[this.random]
 
     this.correctLetters = []
     this.almostCorrectLetters = []
@@ -98,16 +98,16 @@ export default class Board {
     const [y] = this.getPointer()
     const userWord = this.getBoard()[y].join('')
 
-    //Verificar que la palabra tenga 5 letras
+    //Check that the word has $size letters
     if (userWord.length !== this.size) return
 
-    //Verificar que la palabra esté en el diccionario
+    //Check that the word is in the dictionary
     if (!this.words.includes(userWord)) {
       this.alert.triggerAlert({ message: 'La palabra no está en el diccionario', type: 'error' })
       return
     }
 
-    //Verificar que letras de la palabra estan en la posicion correcta y existen en la palabra a buscar
+    //Check that the word has the correct letters
     const userWordLetters = userWord.split('')
     const wordLetters = this.word.split('')
 
