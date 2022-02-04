@@ -8,12 +8,155 @@
     <title>Wordle (ES) - Un juego de palabras diario</title>
   </head>
   <body>
-    <div class="wrapper">
-      <div class="header">
-        <h1 class="headerTitle">Wordle (ES)</h1>
-      </div>
-      <div class="board"></div>
-      <div class="keyboardContainer"></div>
-    </div>
+    <main class="wrapper">
+      <section class="gameContainer">
+        <header class="header">
+          <nav class="headerNav">
+            <button id="rulesButton" class="headerButton">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" class="headerIcon">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+            </button>
+            <h1 class="headerTitle">Wordle (ES)</h1>
+            <ul class="buttonsContainer">
+              <li>
+                <button id="statsButton" class="headerButton">
+                  <svg
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                    class="headerIcon"
+                    aria-label="Resultados"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M8 13v-1m4 1v-3m4 3V8M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
+                    ></path>
+                  </svg>
+                </button>
+              </li>
+              <li>
+                <button id="settingsButton" class="headerButton">
+                  <svg
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                    id="settingsIcon"
+                    class="headerIcon"
+                    aria-label="Opciones del juego"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </header>
+        <ul class="board"></ul>
+        <ul class="keyboardContainer"></ul>
+      </section>
+      <section class="rulesContainer">
+        <button class="closeButton">
+          <svg
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="closeIcon"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <h3 class="rulesTitle">Cómo jugar</h3>
+        <p class="text">Adivina la plabra oculta en seis intentos.</p>
+        <p class="text">Cada intento debe ser una palabra válida de 5 letras</p>
+        <p class="text">
+          Despues de cada intento el color de las letras cambia para mostrar qué tan cerca estás de acertar la palabra
+        </p>
+        <p class="subtitle textBold">Ejemplos</p>
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.25rem">
+            <div class="cell correctCell demoCell">
+              <span class="cellText">G</span>
+            </div>
+            <div class="cell activeCell demoCell">
+              <span class="cellText">A</span>
+            </div>
+            <div class="cell activeCell demoCell">
+              <span class="cellText">T</span>
+            </div>
+            <div class="cell activeCell demoCell">
+              <span class="cellText">O</span>
+            </div>
+            <div class="cell activeCell demoCell">
+              <span class="cellText">S</span>
+            </div>
+          </div>
+          <p>La letra <span class="textBold">G</span> está en la palabra y en la posición correcta.</p>
+        </div>
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.25rem">
+            <div class="cell activeCell demoCell">
+              <span class="cellText">V</span>
+            </div>
+            <div class="cell activeCell demoCell">
+              <span class="cellText">O</span>
+            </div>
+            <div class="cell almostCorrectCell demoCell">
+              <span class="cellText">C</span>
+            </div>
+            <div class="cell activeCell demoCell">
+              <span class="cellText">A</span>
+            </div>
+            <div class="cell activeCell demoCell">
+              <span class="cellText">L</span>
+            </div>
+          </div>
+          <p>La letra <span class="textBold">C</span> está en la palabra pero no en la posición correcta.</p>
+        </div>
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.25rem">
+            <div class="cell activeCell demoCell">
+              <span class="cellText">C</span>
+            </div>
+            <div class="cell activeCell demoCell">
+              <span class="cellText">A</span>
+            </div>
+            <div class="cell activeCell demoCell">
+              <span class="cellText">N</span>
+            </div>
+            <div class="cell activeCell demoCell">
+              <span class="cellText">T</span>
+            </div>
+            <div class="cell wrongCell demoCell">
+              <span class="cellText">O</span>
+            </div>
+          </div>
+          <p>La letra <span class="textBold">O</span> no está en la palabra.</p>
+        </div>
+        <p class="text">Puede haber letras repetidas. Las pistas son independientes para cada letra.</p>
+        <footer class="footer">
+          <p class="textBold">¡Una palabra nueva cada día!</p>
+          <button class="footerButton">¡Jugar!</button>
+        </footer>
+      </section>
+    </main>
   </body>
 </html>
