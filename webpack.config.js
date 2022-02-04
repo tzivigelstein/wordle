@@ -3,6 +3,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
 
 module.exports = {
+  devServer: {
+    watchFiles: path.join(__dirname, 'src'),
+    port: 8080,
+    open: true,
+    liveReload: true
+  },
   entry: './src/js/main.js',
   output: {
     path: path.resolve(__dirname, 'build'),
