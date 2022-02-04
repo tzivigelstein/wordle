@@ -10,13 +10,13 @@ board.initBoard()
 
 keyboard.onClick(({ letter, id }) => {
   const intID = parseInt(id)
-  const sendButtonID = 20
-  const deleteButtonID = 28
+  const SEND_BUTTON_ID = 20
+  const DELETE_BUTTON_ID = 28
 
-  if (intID === sendButtonID) {
+  if (intID === SEND_BUTTON_ID) {
     board.nextWord()
     keyboard.updateLettersStatus(board.getLettersStatus())
-  } else if (intID === deleteButtonID) {
+  } else if (intID === DELETE_BUTTON_ID) {
     board.deleteLetter()
   } else {
     board.setLetter(letter)
