@@ -1,9 +1,10 @@
 import { deleteButtonSVG } from './deleteButtonSVG.js'
-const keyboard = $('.keyboardContainer')
+import { $, $$ } from './utils/index'
 import keyboardLetters from './keyboardLetters.js'
 
 export default class Keyboard {
   constructor() {
+    this.keyboardElement = $('.keyboardContainer')
     this.initKeyboard()
   }
 
@@ -20,7 +21,7 @@ export default class Keyboard {
         keyboardLettersFragment.appendChild(deleteButton)
       }
 
-      keyboard.appendChild(keyboardLettersFragment)
+      this.keyboardElement.appendChild(keyboardLettersFragment)
     })
 
     function createKeyboardLetter({ letter, id }) {

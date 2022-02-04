@@ -1,4 +1,4 @@
-import dictionary from '../dictionary.js'
+import dictionary from './dictionary.js'
 import Alert from './Alert.js'
 
 export default class Board {
@@ -138,7 +138,6 @@ export default class Board {
     })
 
     if (userWord === this.word) {
-      console.log('correct')
       this.alert.triggerAlert({ message: 'La palabra es correcta', type: 'success' })
       return
     }
@@ -147,7 +146,6 @@ export default class Board {
   }
 
   initBoard() {
-    console.log(`The word is ${this.word}`)
     const board = document.querySelector('.board')
     const boardFragment = document.createDocumentFragment()
 

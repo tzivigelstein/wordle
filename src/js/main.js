@@ -1,5 +1,6 @@
-import Keyboard from './js/Keyboard.js'
-import Board from './js/Board.js'
+import '../styles.css'
+import Keyboard from './Keyboard.js'
+import Board from './Board.js'
 
 const board = new Board({})
 
