@@ -1,0 +1,66 @@
+.rulesContainer {
+  position: absolute;
+  background-color: #fff;
+  inset: 0;
+  display: none;
+  transition: opacity 0.5s ease;
+  padding: 1rem;
+}
+
+.rulesContainerActive {
+  display: initial;
+}
+
+.closeButton {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.closeIcon {
+  stroke: #a3a3a3;
+}
+
+.text {
+  font-size: 1rem;
+  margin: 0.75rem 0;
+}
+
+.textBold {
+  font-weight: 700;
+}
+
+.rulesTitle {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  margin: 0.75rem 0;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-top: 1px solid rgb(229 231 235);
+  border-bottom: 1px solid rgb(229 231 235);
+}
+
+.footerButton {
+  background-color: #6aaa64;
+  border-radius: 0.25rem;
+  border: none;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: bold;
+  line-height: 1.25rem;
+  outline: none;
+  padding: 0.75rem 1.5rem;
+  text-transform: uppercase;
+}
