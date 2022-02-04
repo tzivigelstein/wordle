@@ -1,6 +1,8 @@
 import { deleteButtonSVG } from './deleteButtonSVG.js'
-import { $, $$ } from './utils/index'
+import utils from './utils/index.js'
 import keyboardLetters from './keyboardLetters.js'
+
+const { $, $$ } = utils
 
 export default class Keyboard {
   constructor() {
