@@ -9,6 +9,6 @@ I made it the old school way, just vanilla JavaScript.
 Runs the development build in webpack watch mode.
 
 ### `npm run build`
-Runs the build webpack process. The final build directory is located at `./build`
+Runs the webpack build process. The final build directory is located at `./build`
 
 
