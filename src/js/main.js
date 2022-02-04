@@ -1,6 +1,7 @@
 import '../styles.css'
 import '../game.css'
 import '../rules.css'
+import '../stats.css'
 import Keyboard from './Keyboard.js'
 import Board from './Board.js'
 import { $ } from './utils'
@@ -26,9 +27,10 @@ keyboard.onClick(({ letter, id }) => {
   }
 })
 
-const rulesCloseButton = $('.closeButton')
 const rulesContainer = $('.rulesContainer')
 const rulesOpenButton = $('#rulesButton')
+const rulesCloseButton = $('#closeRulesButton')
+
 const footerButton = $('.footerButton')
 
 rulesOpenButton.addEventListener('click', () => {
@@ -41,4 +43,16 @@ rulesCloseButton.addEventListener('click', () => {
 
 footerButton.addEventListener('click', () => {
   rulesContainer.classList.remove('rulesContainerActive')
+})
+
+const statsContainer = $('.statsContainer')
+const statsOpenButton = $('#statsButton')
+const statsCloseButton = $('#closeStatsButton')
+
+statsOpenButton.addEventListener('click', () => {
+  statsContainer.classList.add('statsContainerActive')
+})
+
+statsCloseButton.addEventListener('click', () => {
+  statsContainer.classList.remove('statsContainerActive')
 })
