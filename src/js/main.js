@@ -4,7 +4,9 @@ import '../rules.css'
 import '../stats.css'
 import Keyboard from './Keyboard.js'
 import Board from './Board.js'
-import { $ } from './utils'
+import utils from './utils'
+
+const { $ } = utils
 
 const board = new Board({})
 
