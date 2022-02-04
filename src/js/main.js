@@ -1,6 +1,9 @@
 import '../styles.css'
+import '../game.css'
+import '../rules.css'
 import Keyboard from './Keyboard.js'
 import Board from './Board.js'
+import { $ } from './utils'
 
 const board = new Board({})
 
@@ -21,4 +24,21 @@ keyboard.onClick(({ letter, id }) => {
   } else {
     board.setLetter(letter)
   }
+})
+
+const rulesCloseButton = $('.closeButton')
+const rulesContainer = $('.rulesContainer')
+const rulesOpenButton = $('#rulesButton')
+const footerButton = $('.footerButton')
+
+rulesOpenButton.addEventListener('click', () => {
+  rulesContainer.classList.add('rulesContainerActive')
+})
+
+rulesCloseButton.addEventListener('click', () => {
+  rulesContainer.classList.remove('rulesContainerActive')
+})
+
+footerButton.addEventListener('click', () => {
+  rulesContainer.classList.remove('rulesContainerActive')
 })
