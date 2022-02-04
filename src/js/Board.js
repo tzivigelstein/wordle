@@ -1,5 +1,6 @@
 import dictionary from './dictionary.js'
 import Alert from './Alert.js'
+import { getWordOfTheDay } from './utils/index.js'
 
 export default class Board {
   constructor(params) {
@@ -9,8 +10,7 @@ export default class Board {
     this.rowSize = size + 1
     this.board = []
     this.words = dictionary.filter(word => word.length === this.size)
-    this.random = Math.floor(Math.random() * this.words.length)
-    this.word = this.words[this.random]
+    this.word = getWordOfTheDay(this.words)
 
     this.correctLetters = []
     this.almostCorrectLetters = []
@@ -138,7 +138,7 @@ export default class Board {
     })
 
     if (userWord === this.word) {
-      this.alert.triggerAlert({ message: 'La palabra es correcta', type: 'success' })
+      openStats()
       return
     }
 
@@ -167,4 +167,11 @@ export default class Board {
 
     board.appendChild(boardFragment)
   }
+}
+
+function openStats() {
+  setTimeout(() => {
+    const stats = document.querySelector('.statsContainer')
+    stats.classList.add('statsContainerActive')
+  }, 1000)
 }
