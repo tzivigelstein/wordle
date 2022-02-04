@@ -1,0 +1,53 @@
+.statsContainer {
+  inset: 0;
+  position: absolute;
+  background-color: #fff;
+  display: none;
+}
+
+.statsContainerActive {
+  display: initial;
+}
+
+.closeStatsButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.closeIcon {
+  stroke: #a3a3a3;
+}
+
+.statsTitle {
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.numericStats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.statContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+.data {
+  font-size: 2.25rem;
+}
+
+.placeholder {
+  font-size: 0.75rem;
+}
