@@ -20,16 +20,11 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         { from: 'src/assets', to: 'assets' },
-        { from: 'src/styles.css', to: 'styles.css' }
+        { from: 'src/styles/styles.css', to: 'styles/styles.css' },
+        { from: 'src/styles/game.css', to: 'styles/game.css' },
+        { from: 'src/styles/rules.css', to: 'styles/rules.css' },
+        { from: 'src/styles/stats.css', to: 'styles/stats.css' }
       ]
     })
-  ],
-  module: {
-    rules: [
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader']
-      }
-    ]
-  }
+  ]
 }
