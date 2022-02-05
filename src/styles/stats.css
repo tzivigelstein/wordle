@@ -24,6 +24,16 @@
   stroke: #a3a3a3;
 }
 
+.wordOfTheDayParagraph {
+  text-align: center;
+  font-size: 1rem;
+}
+
+.wordOfTheDay {
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+}
+
 .statsTitle {
   font-weight: 700;
   text-transform: uppercase;
