@@ -3,6 +3,7 @@
   position: absolute;
   background-color: #fff;
   display: none;
+  padding: 1rem;
 }
 
 .statsContainerActive {
