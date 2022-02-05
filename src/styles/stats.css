@@ -24,6 +24,17 @@
   stroke: #a3a3a3;
 }
 
+.underConstructionSign {
+  padding: 2rem;
+  background-color: rgba(255, 186, 102, 0.8);
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  border-radius: 0.5rem;
+  margin-top: 3rem;
+}
+
 .wordOfTheDayParagraph {
   text-align: center;
   font-size: 1rem;
