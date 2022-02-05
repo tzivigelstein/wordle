@@ -2,7 +2,7 @@ import dictionary from './dictionary.js'
 import Alert from './Alert.js'
 import utils from './utils/index.js'
 
-const { getWordOfTheDay } = utils
+const { getWordOfTheDay, $ } = utils
 
 export default class Board {
   constructor(params) {
@@ -139,7 +139,7 @@ export default class Board {
       }
     }
 
-    const ANIMATION_DURATION = 250
+    const ANIMATION_DURATION = 200
     const OVERALL_ANIMATION_DURATION = this.columnSize * ANIMATION_DURATION
     const WIN_ANIMATION_DURATION = 1000
     const FINISH_DELAY_ANIMATION_DURATION = 250
@@ -178,6 +178,12 @@ export default class Board {
         actualRow.classList.add('boardRowCorrect')
       }, OVERALL_ANIMATION_DURATION)
 
+      const wordOfTheDayContainer = $('.wordOfTheDayContainer')
+
+      const wordOfTheDayElement = this.createWordOfTheDayElement()
+
+      wordOfTheDayContainer.appendChild(wordOfTheDayElement)
+
       setTimeout(() => {
         openStats()
       }, OVERALL_ANIMATION_DURATION + WIN_ANIMATION_DURATION)
@@ -187,12 +193,33 @@ export default class Board {
 
     if (userWord !== this.word && hasFinished) {
       this.finished = true
+
+      const wordOfTheDayContainer = $('.wordOfTheDayContainer')
+
+      const wordOfTheDayElement = this.createWordOfTheDayElement()
+
+      wordOfTheDayContainer.appendChild(wordOfTheDayElement)
+
       setTimeout(() => {
         openStats()
       }, OVERALL_ANIMATION_DURATION + FINISH_DELAY_ANIMATION_DURATION)
     }
 
     this.pointer = [y + 1, 0]
+  }
+
+  createWordOfTheDayElement() {
+    const wordOfTheDayParagraph = document.createElement('p')
+    wordOfTheDayParagraph.classList.add('wordOfTheDayParagraph')
+    wordOfTheDayParagraph.innerText = 'La palabra era: '
+
+    const wordOfTheDay = document.createElement('span')
+    wordOfTheDay.classList.add('wordOfTheDay')
+    wordOfTheDay.innerText = this.word
+
+    wordOfTheDayParagraph.appendChild(wordOfTheDay)
+
+    return wordOfTheDayParagraph
   }
 
   initBoard() {
