@@ -1,7 +1,3 @@
-import '../styles.css'
-import '../game.css'
-import '../rules.css'
-import '../stats.css'
 import Keyboard from './Keyboard.js'
 import Board from './Board.js'
 import utils from './utils'
