@@ -1,4 +1,4 @@
-# Wordle (ES) clone [![wakatime](https://wakatime.com/badge/user/b9d25ba3-da9c-44da-9a0b-bd8bb81c6074/project/987152a6-9fac-490a-b48c-4d6cdc35512e.svg)](https://wakatime.com/badge/user/b9d25ba3-da9c-44da-9a0b-bd8bb81c6074/project/987152a6-9fac-490a-b48c-4d6cdc35512e)
+# Wordle (ES) clone [![wakatime](https://wakatime.com/badge/user/b9d25ba3-da9c-44da-9a0b-bd8bb81c6074/project/8c499ee0-24d6-42cc-8a43-093b43c71a87.svg)](https://wakatime.com/badge/user/b9d25ba3-da9c-44da-9a0b-bd8bb81c6074/project/8c499ee0-24d6-42cc-8a43-093b43c71a87)
 
 A clone of the game of the moment (January - February, 2022) Wordle.
 \
