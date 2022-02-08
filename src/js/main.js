@@ -1,10 +1,18 @@
 import Keyboard from './Keyboard.js'
 import Board from './Board.js'
 import utils from './utils'
+import Stats from './Stats.js'
+import StatsUI from './StatsUI.js'
 
 const { $ } = utils
 
 const board = new Board({})
+const statsUI = new StatsUI()
+const stats = new Stats()
+
+statsUI.setPlayed({ played: stats.getPlayedMatches() })
+statsUI.setWinRate({ winRate: stats.getWinRate() })
+statsUI.setFavoriteWords({ favoriteWords: stats.getFavoriteWords() })
 
 const keyboard = new Keyboard()
 
