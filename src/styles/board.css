@@ -1,73 +1,18 @@
 .gameContainer {
-  height: 100%;
-  align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
-
-.header {
-  border-bottom: 1px solid rgb(212, 212, 212);
-  padding-bottom: 0.75rem;
-  width: 100%;
-}
-
-.headerNav {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  position: relative;
-}
-
-.headerButton {
-  background-color: transparent;
-  padding: 0;
-  border: none;
-  outline: none;
-  cursor: pointer;
-}
-
-.headerIcon {
-  stroke: rgb(115, 115, 115);
-  width: 24px;
-  height: 24px;
-}
-
-#settingsIcon {
-  fill: rgb(115, 115, 115);
-  stroke: none;
-}
-
-.headerTitle {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-  letter-spacing: 0.05rem;
-  text-transform: uppercase;
-  font-weight: 700;
-  text-align: center;
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  white-space: nowrap;
-  transform: translate(-50%, -50%);
-}
-
-.buttonsContainer {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  display: flex;
-  gap: 0.75rem;
+  height: 100%;
+  justify-content: space-between;
 }
 
 .board {
-  width: 68.35%;
+  aspect-ratio: 1 / 1.2;
   display: grid;
   gap: 0.25rem;
-  aspect-ratio: 1 / 1.2;
   margin: 0;
   padding: 0;
+  width: 68.359375%;
 }
 
 .boardRow {
@@ -131,12 +76,11 @@
 
 .cell {
   width: 100%;
-  height: 100%;
-  aspect-ratio: 1 / 1;
   border: 2px solid rgb(212, 212, 212);
   display: flex;
   align-items: center;
   justify-content: center;
+  aspect-ratio: 1 / 1;
 }
 
 .demoCell {
@@ -206,50 +150,4 @@
   font-size: 2.25rem;
   font-weight: bold;
   text-transform: uppercase;
-}
-
-.keyboardContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 0;
-}
-
-.keyboardRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-  width: 100%;
-}
-
-.keyboardButton {
-  background-color: rgb(211, 214, 218);
-  border-radius: 0.25rem;
-  border: none;
-  cursor: pointer;
-  flex: 1;
-  font-size: 0.875rem;
-  font-weight: 700;
-  height: 3.5rem;
-  line-height: 1.25rem;
-  outline: none;
-  padding: 0.5rem;
-  text-transform: uppercase;
-}
-
-.correctLetter {
-  background-color: #66aa64;
-  color: #fff;
-}
-
-.almostCorrectLetter {
-  background-color: #c9b458;
-  color: #fff;
-}
-
-.wrongLetter {
-  background-color: #787c7e;
-  color: #fff;
 }
