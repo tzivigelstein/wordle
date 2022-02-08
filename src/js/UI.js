@@ -1,3 +1,4 @@
+import StatsUI from './StatsUI'
 import { $, $$ } from './utils/documentSelectors'
 
 export default class UI {
@@ -106,32 +107,10 @@ export default class UI {
     }, this.ANIMATION_DURATION * x)
   }
 
-  setWordOfTheDay({ word }) {
-    const wordOfTheDayContainer = $('.wordOfTheDayContainer')
-
-    const wordOfTheDayElement = this.createWordOfTheDayElement({ word })
-
-    wordOfTheDayContainer.appendChild(wordOfTheDayElement)
-  }
-
-  createWordOfTheDayElement({ word }) {
-    const wordOfTheDayParagraph = document.createElement('p')
-    wordOfTheDayParagraph.classList.add('wordOfTheDayParagraph')
-    wordOfTheDayParagraph.innerText = 'La palabra era: '
-
-    const wordOfTheDay = document.createElement('span')
-    wordOfTheDay.classList.add('wordOfTheDay')
-    wordOfTheDay.innerText = word
-
-    wordOfTheDayParagraph.appendChild(wordOfTheDay)
-
-    return wordOfTheDayParagraph
-  }
-
   openStatsPage() {
-    const stats = document.querySelector('.statsContainer')
+    const statsUI = new StatsUI()
     setTimeout(() => {
-      stats.classList.add('statsContainerActive')
+      statsUI.openStatsPage()
     }, this.OVERALL_ANIMATION_DURATION + this.WIN_ANIMATION_DURATION)
   }
 }
