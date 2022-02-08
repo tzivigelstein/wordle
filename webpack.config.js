@@ -21,7 +21,7 @@ module.exports = {
       patterns: [
         { from: 'src/assets', to: 'assets' },
         { from: 'src/styles/styles.css', to: 'styles/styles.css' },
-        { from: 'src/styles/game.css', to: 'styles/game.css' },
+        { from: 'src/styles/board.css', to: 'styles/board.css' },
         { from: 'src/styles/rules.css', to: 'styles/rules.css' },
         { from: 'src/styles/stats.css', to: 'styles/stats.css' }
       ]
