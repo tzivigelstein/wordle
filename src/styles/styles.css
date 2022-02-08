@@ -1,3 +1,20 @@
+:root {
+  --correct-color: #66aa64;
+  --almost-correct-color: #c9b458;
+  --wrong-color: #787c7e;
+  --alert-success-color: #66aa64;
+  --alert-error-color: #e74c3c;
+  --alert-message-color: #fff;
+  --letter-color: #fff;
+  --button-background-color: rgb(211, 214, 218);
+  --button-text-color: #fff;
+  --header-border-color: rgb(212, 212, 212);
+  --icon-color: rgb(115, 115, 115);
+  --background-color: #fff;
+  --footer-border-color: rgb(229 231 235);
+  --cell-text-color: #fff;
+}
+
 * {
   font-family: sans-serif;
   box-sizing: border-box;
@@ -44,7 +61,7 @@ svg {
 }
 
 .headerNav {
-  border-bottom: 1px solid rgb(212, 212, 212);
+  border-bottom: 1px solid var(--header-border-color);
   padding: 0.25rem 0.75rem;
   display: flex;
   height: 100%;
@@ -63,13 +80,13 @@ svg {
 }
 
 .headerIcon {
-  stroke: rgb(115, 115, 115);
+  stroke: var(--icon-color);
   width: 24px;
   height: 24px;
 }
 
 #settingsIcon {
-  fill: rgb(115, 115, 115);
+  fill: var(--icon-color);
   stroke: none;
 }
 
@@ -112,7 +129,7 @@ svg {
 }
 
 .keyboardButton {
-  background-color: rgb(211, 214, 218);
+  background-color: var(--button-background-color);
   border-radius: 0.25rem;
   border: none;
   cursor: pointer;
@@ -127,18 +144,18 @@ svg {
 }
 
 .correctLetter {
-  background-color: #66aa64;
-  color: #fff;
+  background-color: var(--correct-color);
+  color: var(--letter-color);
 }
 
 .almostCorrectLetter {
-  background-color: #c9b458;
-  color: #fff;
+  background-color: var(--almost-correct-color);
+  color: var(--letter-color);
 }
 
 .wrongLetter {
-  background-color: #787c7e;
-  color: #fff;
+  background-color: var(--wrong-color);
+  color: var(--letter-color);
 }
 
 .alertContainer {
@@ -150,14 +167,15 @@ svg {
 }
 
 .alertSuccess {
-  background-color: #66aa64;
+  background-color: var(--alert-success-color);
 }
 
 .alertError {
-  background-color: #e74c3c;
+  background-color: var(--alert-error-color);
 }
 
 .alertMessage {
-  color: #fff;
+  color: var(--alert-message-color);
   margin: 0;
+  font-size: 1.1rem;
 }

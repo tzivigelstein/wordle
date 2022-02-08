@@ -1,7 +1,7 @@
 .statsContainer {
   inset: 0;
   position: absolute;
-  background-color: #fff;
+  background-color: var(--background-color);
   display: none;
   padding: 1rem;
 }

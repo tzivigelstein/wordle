@@ -107,23 +107,29 @@
 
 .correctCell {
   border: 1px solid transparent;
-  background-color: #66aa64;
-  color: #fff;
+  background-color: var(--correct-color);
+  color: var(--cell-text-color);
   animation: FlipIn 250ms ease-in, FlipOut 250ms ease-in;
 }
 
 .almostCorrectCell {
   border: 1px solid transparent;
-  background-color: #c9b458;
-  color: #fff;
+  background-color: var(--almost-correct-color);
+  color: var(--cell-text-color);
   animation: FlipIn 250ms ease-in, FlipOut 250ms ease-in;
 }
 
 .wrongCell {
   border: 1px solid transparent;
-  background-color: #787c7e;
-  color: #fff;
+  background-color: var(--wrong-color);
+  color: var(--cell-text-color);
   animation: FlipIn 250ms ease-in, FlipOut 250ms ease-in;
+}
+
+.cellText {
+  font-size: 2.25rem;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 @keyframes FlipIn {
@@ -144,10 +150,4 @@
   100% {
     transform: rotateX(0);
   }
-}
-
-.cellText {
-  font-size: 2.25rem;
-  font-weight: bold;
-  text-transform: uppercase;
 }

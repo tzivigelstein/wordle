@@ -1,6 +1,6 @@
 .rulesContainer {
   position: absolute;
-  background-color: #fff;
+  background-color: var(--background-color);
   inset: 0;
   display: none;
   transition: opacity 0.5s ease;
@@ -23,7 +23,7 @@
 }
 
 .closeIcon {
-  stroke: #a3a3a3;
+  stroke: var(--icon-color);
 }
 
 .text {
@@ -49,15 +49,15 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
-  border-top: 1px solid rgb(229 231 235);
-  border-bottom: 1px solid rgb(229 231 235);
+  border-top: 1px solid var(--footer-border-color);
+  border-bottom: 1px solid var(--footer-border-color);
 }
 
 .footerButton {
-  background-color: #6aaa64;
+  background-color: var(--correct-color);
   border-radius: 0.25rem;
   border: none;
-  color: #fff;
+  color: var(--button-text-color);
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: bold;
