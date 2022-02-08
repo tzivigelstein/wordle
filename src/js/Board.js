@@ -1,8 +1,9 @@
 import dictionary from './dictionary.js'
 import Alert from './Alert.js'
 import utils from './utils/index.js'
+import UI from './UI.js'
 
-const { getWordOfTheDay, $ } = utils
+const { getWordOfTheDay, getRepeatedLettersIndexes } = utils
 
 export default class Board {
   constructor(params) {
@@ -13,18 +14,18 @@ export default class Board {
     this.board = []
     this.words = dictionary.filter(word => word.length === this.size)
     this.word = getWordOfTheDay(this.words)
+    this.pointer = [0, 0]
+    this.finished = false
 
     this.correctLetters = []
     this.almostCorrectLetters = []
     this.wrongLetters = []
 
     this.alert = new Alert()
-
-    this.pointer = [0, 0]
-
-    this.finished = false
+    this.ui = new UI({ columnSize: this.getColumnSize() })
 
     this.populateBoard()
+    this.ui.createBoard({ columnSize: this.getColumnSize(), rowSize: this.getRowSize() })
   }
 
   getWord() {
@@ -37,6 +38,14 @@ export default class Board {
 
   getPointer() {
     return this.pointer
+  }
+
+  getColumnSize() {
+    return this.columnSize
+  }
+
+  getRowSize() {
+    return this.rowSize
   }
 
   getLettersStatus() {
@@ -64,19 +73,8 @@ export default class Board {
 
     this.board[y][x] = letter
 
-    const cells = document.querySelectorAll('.cell')
+    this.ui.setLetter({ letter, position: { y, x } })
 
-    for (let cell of cells) {
-      if (cell.getAttribute('data-x') === String(x) && cell.getAttribute('data-y') === String(y)) {
-        cell.classList.add('activeCell')
-
-        const span = document.createElement('span')
-        span.innerText = letter
-        span.classList.add('cellText')
-
-        cell.appendChild(span)
-      }
-    }
     this.updatePointer(x => x + 1)
   }
 
@@ -90,12 +88,9 @@ export default class Board {
 
     this.board[y][previousPosition] = ''
 
-    const cell = document.querySelector(`[data-x="${previousPosition}"][data-y="${y}"]`)
+    this.ui.removeLetter({ position: { y, x: previousPosition } })
 
-    cell.innerHTML = ''
-    cell.classList.remove('activeCell')
-
-    this.updatePointer(x => previousPosition)
+    this.updatePointer(x => x - 1)
   }
 
   updatePointer(callback) {
@@ -115,15 +110,7 @@ export default class Board {
     //Check that the word is in the dictionary
     if (!this.words.includes(userWord)) {
       this.alert.triggerAlert({ message: 'La palabra no está en el diccionario', type: 'error' })
-      const actualRow = document.querySelector(`[data-y="${y}"].boardRow`)
-
-      const WRONG_WORD_ANIMATION_DURATION = 600
-
-      actualRow.classList.add('boardRowWrong')
-
-      setTimeout(() => {
-        actualRow.classList.remove('boardRowWrong')
-      }, WRONG_WORD_ANIMATION_DURATION)
+      this.ui.setWrongRow({ position: { y } })
       return
     }
 
@@ -131,121 +118,51 @@ export default class Board {
     const userWordLetters = userWord.split('')
     const wordLetters = this.word.split('')
 
-    const indexes = []
+    const compareWords = { firstWord: userWordLetters, secondWord: wordLetters }
 
-    for (let i = 0; i < userWordLetters.length; i++) {
-      if (userWordLetters[i] === wordLetters[i]) {
-        indexes.push(i)
-      }
-    }
+    const repeatedLettersIndexes = getRepeatedLettersIndexes(compareWords)
 
-    const ANIMATION_DURATION = 200
-    const OVERALL_ANIMATION_DURATION = this.columnSize * ANIMATION_DURATION
-    const WIN_ANIMATION_DURATION = 1000
-    const FINISH_DELAY_ANIMATION_DURATION = 250
+    console.log(this.word)
 
     userWordLetters.forEach((letter, index) => {
       const isIncluded = wordLetters.includes(letter)
-      const equalIndex = indexes.includes(index)
-
-      const cell = document.querySelector(`[data-x="${index}"][data-y="${y}"]`)
+      const equalIndex = repeatedLettersIndexes.includes(index)
 
       if (isIncluded && equalIndex) {
-        setTimeout(() => {
-          cell.classList.add('correctCell')
-        }, ANIMATION_DURATION * index)
+        this.ui.setCorrectCell({ x: index, y })
         this.correctLetters.push(letter)
       } else if (isIncluded && !equalIndex) {
-        setTimeout(() => {
-          cell.classList.add('almostCorrectCell')
-        }, ANIMATION_DURATION * index)
+        this.ui.setAlmostCorrectCell({ x: index, y })
         this.almostCorrectLetters.push(letter)
       } else if (!isIncluded && !equalIndex) {
-        setTimeout(() => {
-          cell.classList.add('wrongCell')
-        }, ANIMATION_DURATION * index)
+        this.ui.setWrongCell({ x: index, y })
         this.wrongLetters.push(letter)
       }
     })
 
-    const hasFinished = this.isBoardComplete()
-
-    if (userWord === this.word) {
+    if (this.isWordCorrect({ userWord })) {
       this.finished = true
-
-      setTimeout(() => {
-        const actualRow = document.querySelector(`[data-y="${y}"].boardRow`)
-        actualRow.classList.add('boardRowCorrect')
-      }, OVERALL_ANIMATION_DURATION)
-
-      const wordOfTheDayContainer = $('.wordOfTheDayContainer')
-
-      const wordOfTheDayElement = this.createWordOfTheDayElement()
-
-      wordOfTheDayContainer.appendChild(wordOfTheDayElement)
-
-      setTimeout(() => {
-        openStats()
-      }, OVERALL_ANIMATION_DURATION + WIN_ANIMATION_DURATION)
+      this.ui.setCorrectRow({ position: { y } })
+      this.ui.setWordOfTheDay({ word: this.word })
+      this.ui.openStatsPage()
 
       return
     }
 
-    if (userWord !== this.word && hasFinished) {
+    if (!this.isWordCorrect({ userWord }) && this.isBoardFull()) {
       this.finished = true
-
-      const wordOfTheDayContainer = $('.wordOfTheDayContainer')
-
-      const wordOfTheDayElement = this.createWordOfTheDayElement()
-
-      wordOfTheDayContainer.appendChild(wordOfTheDayElement)
-
-      setTimeout(() => {
-        openStats()
-      }, OVERALL_ANIMATION_DURATION + FINISH_DELAY_ANIMATION_DURATION)
+      this.ui.setWordOfTheDay({ word: this.word })
+      this.ui.openStatsPage()
     }
 
     this.pointer = [y + 1, 0]
   }
 
-  createWordOfTheDayElement() {
-    const wordOfTheDayParagraph = document.createElement('p')
-    wordOfTheDayParagraph.classList.add('wordOfTheDayParagraph')
-    wordOfTheDayParagraph.innerText = 'La palabra era: '
-
-    const wordOfTheDay = document.createElement('span')
-    wordOfTheDay.classList.add('wordOfTheDay')
-    wordOfTheDay.innerText = this.word
-
-    wordOfTheDayParagraph.appendChild(wordOfTheDay)
-
-    return wordOfTheDayParagraph
+  isWordCorrect({ userWord }) {
+    return userWord === this.word
   }
 
-  initBoard() {
-    const board = document.querySelector('.board')
-    const boardFragment = document.createDocumentFragment()
-
-    for (let i = 0; i < this.rowSize; i++) {
-      const row = document.createElement('div')
-      row.classList.add('boardRow')
-      row.setAttribute('data-y', i)
-
-      for (let j = 0; j < this.columnSize; j++) {
-        const cell = document.createElement('div')
-        cell.classList.add('cell')
-        cell.setAttribute('data-x', j)
-        cell.setAttribute('data-y', i)
-        row.appendChild(cell)
-      }
-
-      boardFragment.appendChild(row)
-    }
-
-    board.appendChild(boardFragment)
-  }
-
-  isBoardComplete() {
+  isBoardFull() {
     const board = this.getBoard()
 
     let hasFinished = false
@@ -261,9 +178,4 @@ export default class Board {
 
     return hasFinished
   }
-}
-
-function openStats() {
-  const stats = document.querySelector('.statsContainer')
-  stats.classList.add('statsContainerActive')
 }
