@@ -13,6 +13,7 @@
   --background-color: #fff;
   --footer-border-color: rgb(229 231 235);
   --cell-text-color: #fff;
+  --list-count-color: rgb(115, 115, 115);
 }
 
 * {
