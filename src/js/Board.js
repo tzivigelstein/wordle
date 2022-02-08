@@ -26,6 +26,12 @@ export default class Board {
 
     this.populateBoard()
     this.ui.createBoard({ columnSize: this.getColumnSize(), rowSize: this.getRowSize() })
+    this.consoleWord()
+  }
+
+  consoleWord() {
+    const styles = 'font-size: 1.5rem; font-family: sans-serif; background-color: #09f;'
+    console.log(`%cThe word of the day is ${this.word}`, styles)
   }
 
   getWord() {
@@ -121,8 +127,6 @@ export default class Board {
     const compareWords = { firstWord: userWordLetters, secondWord: wordLetters }
 
     const repeatedLettersIndexes = getRepeatedLettersIndexes(compareWords)
-
-    console.log(this.word)
 
     userWordLetters.forEach((letter, index) => {
       const isIncluded = wordLetters.includes(letter)
