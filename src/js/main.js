@@ -34,7 +34,7 @@ const footerButton = $('.footerButton')
 // Make the rules load for the first time
 // firstTime && "show rules"
 
-rulesContainer.classList.add('rulesContainerActive')
+// rulesContainer.classList.add('rulesContainerActive')
 
 rulesOpenButton.addEventListener('click', () => {
   rulesContainer.classList.add('rulesContainerActive')
