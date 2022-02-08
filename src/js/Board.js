@@ -2,6 +2,8 @@ import dictionary from './dictionary.js'
 import Alert from './Alert.js'
 import utils from './utils/index.js'
 import UI from './UI.js'
+import Stats from './Stats.js'
+import StatsUI from './StatsUI.js'
 
 const { getWordOfTheDay, getRepeatedLettersIndexes } = utils
 
@@ -23,6 +25,9 @@ export default class Board {
 
     this.alert = new Alert()
     this.ui = new UI({ columnSize: this.getColumnSize() })
+    this.statsUI = new StatsUI()
+
+    this.stats = new Stats()
 
     this.populateBoard()
     this.ui.createBoard({ columnSize: this.getColumnSize(), rowSize: this.getRowSize() })
@@ -146,8 +151,16 @@ export default class Board {
 
     if (this.isWordCorrect({ userWord })) {
       this.finished = true
+      this.stats.setPlayedMatch({
+        board: this.getBoard(),
+        word: this.getWord(),
+        hasWon: this.isWordCorrect({ userWord })
+      })
+
       this.ui.setCorrectRow({ position: { y } })
-      this.ui.setWordOfTheDay({ word: this.word })
+      this.statsUI.setPlayed({ played: this.stats.getPlayedMatches() })
+      this.statsUI.setWinRate({ winRate: this.stats.getWinRate() })
+      this.statsUI.setWordOfTheDay({ word: this.word })
       this.ui.openStatsPage()
 
       return
@@ -155,7 +168,16 @@ export default class Board {
 
     if (!this.isWordCorrect({ userWord }) && this.isBoardFull()) {
       this.finished = true
-      this.ui.setWordOfTheDay({ word: this.word })
+      this.stats.setPlayedMatch({
+        board: this.getBoard(),
+        word: this.getWord(),
+        hasWon: this.isWordCorrect({ userWord })
+      })
+
+      this.statsUI.setPlayed({ played: this.stats.getPlayedMatches() })
+      this.statsUI.setWinRate({ winRate: this.stats.getWinRate() })
+      this.statsUI.setWordOfTheDay({ word: this.word })
+      this.statsUI.setFavoriteWords({ favoriteWords: this.stats.getFavoriteWords() })
       this.ui.openStatsPage()
     }
 
