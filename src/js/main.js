@@ -8,8 +8,6 @@ const board = new Board({})
 
 const keyboard = new Keyboard()
 
-board.initBoard()
-
 keyboard.onClick(({ letter, id }) => {
   const intID = parseInt(id)
   const SEND_BUTTON_ID = 20
