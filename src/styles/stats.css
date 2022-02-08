@@ -73,3 +73,43 @@
 .placeholder {
   font-size: 0.75rem;
 }
+
+.favoriteWordsContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  gap: 1rem;
+  list-style: none;
+}
+
+.favoriteWordElement {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--footer-border-color);
+}
+
+.favoriteWordContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.listCount {
+  color: var(--list-count);
+}
+
+.favoriteWord {
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
+
+.usedTimes {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
