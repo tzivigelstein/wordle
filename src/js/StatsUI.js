@@ -43,11 +43,22 @@ export default class StatsUI {
   }
 
   setFavoriteWords({ favoriteWords }) {
+    if (favoriteWords.length === 0) return
+
+    const favoriteWordsWrapper = $('.favoriteWordsWrapper')
     const favoriteWordsContainer = $('.favoriteWordsContainer')
+
+    const statsTitle = document.createElement('h3')
+    statsTitle.classList.add('statsTitle')
+    statsTitle.innerText = 'Palabras favoritas'
+
+    favoriteWordsContainer.innerHTML = ''
     favoriteWords.forEach((word, index) => {
       const favoriteWordElement = this.createFavoriteWordElement({ word, index })
       favoriteWordsContainer.appendChild(favoriteWordElement)
     })
+
+    favoriteWordsWrapper.insertBefore(statsTitle, favoriteWordsContainer)
   }
 
   createFavoriteWordElement({ word: { word, count }, index }) {
