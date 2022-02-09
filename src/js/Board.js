@@ -31,7 +31,6 @@ export default class Board {
 
     this.ui.createBoard({ columnSize: this.getColumnSize(), rowSize: this.getRowSize() })
     this.populateBoard()
-    this.consoleWord()
   }
 
   consoleWord() {
