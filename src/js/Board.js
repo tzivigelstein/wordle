@@ -17,7 +17,6 @@ export default class Board {
     this.words = dictionary.filter(word => word.length === this.size)
     this.word = getWordOfTheDay(this.words)
     this.pointer = [0, 0]
-    this.finished = false
 
     this.correctLetters = []
     this.almostCorrectLetters = []
@@ -28,9 +27,10 @@ export default class Board {
     this.statsUI = new StatsUI()
 
     this.stats = new Stats()
+    this.finished = this.stats.isTodayGameFinished()
 
-    this.populateBoard()
     this.ui.createBoard({ columnSize: this.getColumnSize(), rowSize: this.getRowSize() })
+    this.populateBoard()
     this.consoleWord()
   }
 
@@ -64,15 +64,51 @@ export default class Board {
   }
 
   populateBoard() {
-    for (let i = 0; i < this.rowSize; i++) {
-      const row = []
+    if (this.finished) {
+      const history = this.stats.getHistory()
+      const lastBoard = history[history.length - 1].board
+      this.board = lastBoard
+      this.statsUI.setWordOfTheDay({ word: this.word })
+      this.populateUIBoard({ board: lastBoard })
+    } else {
+      for (let i = 0; i < this.rowSize; i++) {
+        const row = []
 
-      for (let j = 0; j < this.columnSize; j++) {
-        row.push('')
+        for (let j = 0; j < this.columnSize; j++) {
+          row.push('')
+        }
+
+        this.board.push(row)
       }
-
-      this.board.push(row)
     }
+  }
+
+  populateUIBoard({ board }) {
+    board.forEach((row, y) => {
+      row.forEach((letter, x) => {
+        if (letter !== '') {
+          this.ui.setLetter({ letter, position: { y, x } })
+          const compareWords = { firstWord: row, secondWord: this.word.split('') }
+
+          const repeatedLettersIndexes = getRepeatedLettersIndexes(compareWords)
+          row.forEach((letter, index) => {
+            const isIncluded = this.word.split('').includes(letter)
+            const equalIndex = repeatedLettersIndexes.includes(index)
+
+            if (isIncluded && equalIndex) {
+              this.ui.setCorrectCell({ x: index, y })
+              this.correctLetters.push(letter)
+            } else if (isIncluded && !equalIndex) {
+              this.ui.setAlmostCorrectCell({ x: index, y })
+              this.almostCorrectLetters.push(letter)
+            } else if (!isIncluded && !equalIndex) {
+              this.ui.setWrongCell({ x: index, y })
+              this.wrongLetters.push(letter)
+            }
+          })
+        }
+      })
+    })
   }
 
   setLetter(letter) {
@@ -161,6 +197,7 @@ export default class Board {
       this.statsUI.setPlayed({ played: this.stats.getPlayedMatches() })
       this.statsUI.setWinRate({ winRate: this.stats.getWinRate() })
       this.statsUI.setWordOfTheDay({ word: this.word })
+      this.statsUI.setFavoriteWords({ favoriteWords: this.stats.getFavoriteWords() })
       this.ui.openStatsPage()
 
       return
