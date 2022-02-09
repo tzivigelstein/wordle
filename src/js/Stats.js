@@ -4,15 +4,19 @@ export default class Stats {
     this.winRate = this.getWinRate({ played: this.played })
   }
 
+  isTodayGameFinished() {
+    const history = this.getHistory()
+
+    if (history.length === 0) return false
+
+    const date = new Date()
+    const today = date.toDateString()
+
+    const savedDate = new Date(history[0].date)
+    if (today === new Date(savedDate).toDateString()) return true
+  }
+
   getHistory() {
-    /* played = [
-        {
-            id: Number,
-            board: [Array],
-            hasWon: boolean,
-            wordOfTheDay: String,
-        }
-    ] */
     const HISTORY = 'history'
 
     return window.localStorage.getItem(HISTORY) ? JSON.parse(window.localStorage.getItem(HISTORY)) : []
@@ -72,7 +76,7 @@ export default class Stats {
   setPlayedMatch({ board, word, hasWon }) {
     const history = this.getHistory()
 
-    const newHistory = [...history, { id: this.generateId(), board, wordOfTheDay: word, hasWon }]
+    const newHistory = [...history, { id: this.generateId(), date: new Date(), board, wordOfTheDay: word, hasWon }]
 
     window.localStorage.setItem('history', JSON.stringify(newHistory))
   }
