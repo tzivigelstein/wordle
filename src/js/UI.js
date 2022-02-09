@@ -1,5 +1,5 @@
 import StatsUI from './StatsUI'
-import { $, $$ } from './utils/documentSelectors'
+import { $$ } from './utils/documentSelectors'
 
 export default class UI {
   constructor({ columnSize }) {
