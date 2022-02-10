@@ -37,10 +37,11 @@ const rulesCloseButton = $('#closeRulesButton')
 
 const footerButton = $('.footerButton')
 
-// Make the rules load for the first time
-// firstTime && "show rules"
+const history = stats.getHistory()
 
-// rulesContainer.classList.add('rulesContainerActive')
+if (history.length === 0) {
+  rulesContainer.classList.add('rulesContainerActive')
+}
 
 rulesOpenButton.addEventListener('click', () => {
   rulesContainer.classList.add('rulesContainerActive')
