@@ -94,4 +94,24 @@ export default class StatsUI {
 
     return favoriteWordElement
   }
+
+  setNextWordTimer({ time }) {
+    const nextWordTimerContainer = $('.nextWordTimerContainer')
+    const nextWordTimerElement = $('.nextWordTimer')
+
+    let nextWordTimer = nextWordTimerElement
+
+    if (nextWordTimerElement === null) {
+      const title = document.createElement('h3')
+      title.classList.add('nextWordTitle')
+      title.innerText = 'Siguiente palabra'
+
+      nextWordTimer = document.createElement('span')
+      nextWordTimer.classList.add('nextWordTimer')
+      nextWordTimerContainer.appendChild(title)
+      nextWordTimerContainer.appendChild(nextWordTimer)
+    }
+
+    nextWordTimer.innerText = time
+  }
 }
