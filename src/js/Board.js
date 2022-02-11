@@ -68,6 +68,9 @@ export default class Board {
       const lastBoard = history[history.length - 1].board
       this.board = lastBoard
       this.statsUI.setWordOfTheDay({ word: this.word })
+      setInterval(() => {
+        this.statsUI.setNextWordTimer({ time: this.stats.getNextWordTime() })
+      }, 1000)
       this.populateUIBoard({ board: lastBoard })
     } else {
       for (let i = 0; i < this.rowSize; i++) {
@@ -197,6 +200,11 @@ export default class Board {
       this.statsUI.setWinRate({ winRate: this.stats.getWinRate() })
       this.statsUI.setWordOfTheDay({ word: this.word })
       this.statsUI.setFavoriteWords({ favoriteWords: this.stats.getFavoriteWords() })
+
+      setInterval(() => {
+        this.statsUI.setNextWordTimer({ time: this.stats.getNextWordTime() })
+      }, 1000)
+
       this.ui.openStatsPage()
 
       return
@@ -214,6 +222,11 @@ export default class Board {
       this.statsUI.setWinRate({ winRate: this.stats.getWinRate() })
       this.statsUI.setWordOfTheDay({ word: this.word })
       this.statsUI.setFavoriteWords({ favoriteWords: this.stats.getFavoriteWords() })
+
+      setInterval(() => {
+        this.statsUI.setNextWordTimer({ time: this.stats.getNextWordTime() })
+      }, 1000)
+
       this.ui.openStatsPage()
     }
 
