@@ -58,11 +58,11 @@ export default class Keyboard {
     const letters = $$('.keyboardButton')
     letters.forEach(letter => {
       if (correctLetters.includes(letter.innerHTML)) {
-        letter.classList.add('correctLetter')
+        letter.classList.add('correctKeyboardLetter')
       } else if (almostCorrectLetters.includes(letter.innerHTML)) {
-        letter.classList.add('almostCorrectLetter')
+        letter.classList.add('almostCorrectKeyboardLetter')
       } else if (wrongLetters.includes(letter.innerHTML)) {
-        letter.classList.add('wrongLetter')
+        letter.classList.add('wrongKeyboardLetter')
       }
     })
   }
