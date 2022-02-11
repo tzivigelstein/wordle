@@ -1,0 +1,85 @@
+.settingsContainer {
+  inset: 0;
+  position: absolute;
+  background-color: var(--background-color);
+  display: none;
+  padding: 1rem;
+}
+
+.settingsContainerActive {
+  display: initial;
+}
+
+.settingsTitle {
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.settingsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.settingContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0 0.75rem 0;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.settingHelper {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.75rem;
+  color: var(--text-color-light);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.settingButton {
+  border-radius: 100rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  width: 2.1875rem;
+  height: 1.25rem;
+  background-color: rgb(212, 212, 212);
+  padding: 0;
+  position: relative;
+}
+
+.settingButtonActive {
+  background-color: rgb(59, 130, 246);
+}
+
+.settingButtonCircle {
+  background-color: white;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  height: 16px;
+  width: 16px;
+  border-radius: 100rem;
+  pointer-events: none;
+  display: flex;
+  position: absolute;
+  left: 0;
+}
+
+.settingButtonCircleActive {
+  transform: translateX(100%);
+}
+
+.linksContainer {
+  margin: 0;
+}
+
+.footerText {
+  font-size: 0.75rem;
+  color: var(--text-color-light);
+}
+
+.footerText a {
+  color: var(--text-color-light);
+}
