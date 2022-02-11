@@ -23,7 +23,8 @@ module.exports = {
         { from: 'src/styles/styles.css', to: 'styles/styles.css' },
         { from: 'src/styles/game.css', to: 'styles/game.css' },
         { from: 'src/styles/rules.css', to: 'styles/rules.css' },
-        { from: 'src/styles/stats.css', to: 'styles/stats.css' }
+        { from: 'src/styles/stats.css', to: 'styles/stats.css' },
+        { from: 'src/styles/settings.css', to: 'styles/settings.css' }
       ]
     })
   ]
