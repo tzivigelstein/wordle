@@ -12,8 +12,11 @@ export default class Stats {
     const date = new Date()
     const today = date.toDateString()
 
-    const savedDate = new Date(history[0].date)
-    if (today === new Date(savedDate).toDateString()) return true
+    const index = history.length - 1
+
+    const savedDate = new Date(history[index].date)
+
+    return today === new Date(savedDate).toDateString()
   }
 
   getHistory() {
