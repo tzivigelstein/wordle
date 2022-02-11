@@ -87,4 +87,25 @@ export default class Stats {
   generateId() {
     return crypto.randomUUID()
   }
+
+  getNextWordTime() {
+    const ONE_DAY = 1
+    const today = new Date()
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + ONE_DAY)
+
+    tomorrow.setHours(0, 0, 0, 0)
+
+    const secondsBetweenDays = tomorrow.getTime() - today.getTime()
+
+    const hours = Math.floor(secondsBetweenDays / (1000 * 60 * 60))
+    const minutes = Math.floor((secondsBetweenDays % (1000 * 60 * 60)) / (1000 * 60))
+    const seconds = Math.floor((secondsBetweenDays % (1000 * 60)) / 1000)
+
+    const time = `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${
+      seconds < 10 ? '0' + seconds : seconds
+    }`
+
+    return time
+  }
 }
