@@ -3,8 +3,12 @@ import Board from './Board.js'
 import utils from './utils'
 import Stats from './Stats.js'
 import StatsUI from './StatsUI.js'
-
+import Setting from './Setting.js'
 const { $ } = utils
+
+export const settings = {
+  accessibility: false
+}
 
 const board = new Board({})
 const statsUI = new StatsUI()
@@ -66,3 +70,63 @@ statsOpenButton.addEventListener('click', () => {
 statsCloseButton.addEventListener('click', () => {
   statsContainer.classList.remove('statsContainerActive')
 })
+
+const settingsContainer = $('.settingsContainer')
+const openSettingsButton = $('#openSettingsButton')
+const closeSettingsButton = $('#closeSettingsButton')
+
+openSettingsButton.addEventListener('click', () => {
+  settingsContainer.classList.add('settingsContainerActive')
+})
+
+closeSettingsButton.addEventListener('click', () => {
+  settingsContainer.classList.remove('settingsContainerActive')
+})
+
+const settingsList = $('.settingsList').childNodes
+
+const LIST_ITEM_TAGNAME = 'LI'
+
+settingsList.forEach(el => {
+  if (el.tagName === LIST_ITEM_TAGNAME && el.id !== 'notoggle') {
+    const label = el.firstElementChild
+
+    const setting = new Setting(el.id, label)
+
+    switch (el.id) {
+      case 'darkModeItem':
+        setting.onLoad(isChecked => isChecked && setDarkMode(isChecked))
+        setting.onToggle(setDarkMode)
+        break
+      case 'colorblindItem':
+        setting.onLoad(isChecked => isChecked && setColorblindMode(isChecked))
+        setting.onToggle(setColorblindMode)
+        break
+      case 'accessibilityItem':
+        setting.onLoad(isChecked => {
+          settings.accessibility = isChecked
+          isChecked && setAccessibilityMode(isChecked)
+        })
+        setting.onToggle(isChecked => {
+          settings.accessibility = isChecked
+          setAccessibilityMode(isChecked)
+        })
+        break
+    }
+  }
+})
+
+function setDarkMode(value) {
+  const html = document.querySelector('html')
+  html.toggleAttribute('data-theme', value)
+}
+
+function setColorblindMode(value) {
+  const html = document.querySelector('html')
+  html.toggleAttribute('data-scheme', value)
+}
+
+function setAccessibilityMode(value) {
+  const html = document.querySelector('html')
+  html.toggleAttribute('data-accessibility', value)
+}
