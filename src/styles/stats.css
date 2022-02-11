@@ -10,21 +10,6 @@
   display: initial;
 }
 
-.closeStatsButton {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  padding: 0;
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-}
-
-.closeIcon {
-  stroke: #a3a3a3;
-}
-
 .underConstructionSign {
   padding: 2rem;
   background-color: rgba(255, 186, 102, 0.8);
@@ -89,7 +74,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
-  border-bottom: 1px solid var(--footer-border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .favoriteWordContainer {

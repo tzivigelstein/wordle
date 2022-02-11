@@ -76,7 +76,7 @@
 
 .cell {
   width: 100%;
-  border: 2px solid rgb(212, 212, 212);
+  border: 2px solid var(--cell-border-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,7 +89,7 @@
 }
 
 .activeCell {
-  border-color: #000;
+  border-color: var(--active-cell-border-color);
   animation: Pop 0.1s;
 }
 

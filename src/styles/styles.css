@@ -1,19 +1,91 @@
 :root {
+  /* GENERAL */
   --correct-color: #66aa64;
   --almost-correct-color: #c9b458;
   --wrong-color: #787c7e;
+  --border-color: rgb(229, 231, 235);
+  --background-color: #fff;
+
+  /* ALERT */
   --alert-success-color: #66aa64;
   --alert-error-color: #e74c3c;
+  --alert-info-color: #3498db;
   --alert-message-color: #fff;
-  --letter-color: #fff;
+
+  --button-text-color: #fff;
+  --icon-color: rgb(115, 115, 115);
+  --list-count-color: rgb(115, 115, 115);
+
+  /* TEXT */
+  --text-color: #000;
+  --text-color-light: #737373;
+
+  /* KEYBOARD */
+  --keyboard-default-color: #000;
+  --keyboard-default-background-color: rgb(211, 214, 218);
+  --correct-keyboard-letter-background-color: #66aa64;
+  --correct-keyboard-letter-color: #fff;
+  --almost-correct-keyboard-letter-background-color: #c9b458;
+  --almost-correct-keyboard-letter-color: #fff;
+  --wrong-keyboard-letter-background-color: #787c7e;
+  --wrong-keyboard-letter-color: #fff;
+  --keyboard-font-size: 0.875rem;
+
+  /* CELL */
+  --cell-text-color: #fff;
+  --cell-border-color: rgb(212, 212, 212);
+  --active-cell-border-color: #000;
+}
+
+[data-theme] {
+  /* GENERAL */
+  --wrong-color: #3a3a3c;
+  --border-color: rgb(64, 64, 64);
+  --background-color: #121213;
+
   --button-background-color: rgb(211, 214, 218);
   --button-text-color: #fff;
-  --header-border-color: rgb(212, 212, 212);
   --icon-color: rgb(115, 115, 115);
-  --background-color: #fff;
-  --footer-border-color: rgb(229 231 235);
-  --cell-text-color: #fff;
   --list-count-color: rgb(115, 115, 115);
+
+  /* TEXT */
+  --text-color: #f5f5f5;
+  --text-color-light: #737373;
+
+  /* KEYBOARD */
+  --keyboard-default-color: #fff;
+  --keyboard-default-background-color: #818384;
+  --correct-keyboard-letter-background-color: #66aa64;
+  --correct-keyboard-letter-color: #fff;
+  --almost-correct-keyboard-letter-background-color: #c9b458;
+  --almost-correct-keyboard-letter-color: #fff;
+  --wrong-keyboard-letter-background-color: #3a3a3c;
+  --wrong-keyboard-letter-color: #fff;
+  --keyboard-font-size: 0.875rem;
+
+  /* CELL */
+  --cell-text-color: #fff;
+  --cell-border-color: rgb(64, 64, 64);
+  --active-cell-border-color: rgb(64, 64, 64);
+}
+
+[data-scheme] {
+  /* GENERAL */
+  --correct-color: #f5793a;
+  --almost-correct-color: #85c0f9;
+
+  /* ALERT */
+  --alert-success-color: #f5793a;
+  --alert-error-color: #85c0f9;
+  --alert-info-color: rgb(119, 141, 211);
+
+  /* KEYBOARD */
+  --correct-keyboard-letter-background-color: #f5793a;
+  --almost-correct-keyboard-letter-background-color: #85c0f9;
+}
+
+[data-accessibility] {
+  --keyboard-font-size: 1.5rem;
 }
 
 * {
@@ -30,14 +102,19 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-
+  background-color: var(--background-color);
   display: flex;
+  color: var(--text-color);
   align-items: center;
   justify-content: center;
 }
 
 svg {
   pointer-events: none;
+}
+
+a {
+  color: var(--text-color);
 }
 
 .wrapper {
@@ -56,13 +133,28 @@ svg {
   }
 }
 
+.closeButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.closeIcon {
+  stroke: #a3a3a3;
+}
+
 .header {
   width: 100%;
   height: 50px;
 }
 
 .headerNav {
-  border-bottom: 1px solid var(--header-border-color);
+  border-bottom: 1px solid var(--border-color);
   padding: 0.25rem 0.75rem;
   display: flex;
   height: 100%;
@@ -119,7 +211,7 @@ svg {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin: 0 auto;
-  padding: 0 0.5rem 0.5rem 0.5rem;
+  padding: 0 0.5rem 1.25rem 0.5rem;
 }
 
 .keyboardRow {
@@ -130,33 +222,34 @@ svg {
 }
 
 .keyboardButton {
-  background-color: var(--button-background-color);
+  background-color: var(--keyboard-default-background-color);
   border-radius: 0.25rem;
   border: none;
   cursor: pointer;
   flex: 1;
-  font-size: 0.875rem;
+  font-size: var(--keyboard-font-size);
   font-weight: 700;
   height: 3.5rem;
   line-height: 1.25rem;
   outline: none;
   padding: 0.5rem;
   text-transform: uppercase;
+  color: var(--keyboard-default-color);
 }
 
-.correctLetter {
-  background-color: var(--correct-color);
-  color: var(--letter-color);
+.correctKeyboardLetter {
+  background-color: var(--correct-keyboard-letter-background-color);
+  color: var(--correct-keyboard-letter-color);
 }
 
-.almostCorrectLetter {
-  background-color: var(--almost-correct-color);
-  color: var(--letter-color);
+.almostCorrectKeyboardLetter {
+  background-color: var(--almost-correct-keyboard-letter-background-color);
+  color: var(--almost-correct-keyboard-letter-color);
 }
 
-.wrongLetter {
-  background-color: var(--wrong-color);
-  color: var(--letter-color);
+.wrongKeyboardLetter {
+  background-color: var(--wrong-keyboard-letter-background-color);
+  color: var(--wrong-keyboard-letter-color);
 }
 
 .alertContainer {
@@ -173,6 +266,10 @@ svg {
 
 .alertError {
   background-color: var(--alert-error-color);
+}
+
+.alertInfo {
+  background-color: var(--alert-info-color);
 }
 
 .alertMessage {
