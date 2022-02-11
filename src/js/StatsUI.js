@@ -47,12 +47,18 @@ export default class StatsUI {
 
     const favoriteWordsWrapper = $('.favoriteWordsWrapper')
     const favoriteWordsContainer = $('.favoriteWordsContainer')
+    const statsTitleElement = $('.statsTitle')
 
-    const statsTitle = document.createElement('h3')
+    let statsTitle = statsTitleElement
+    if (statsTitleElement === null) {
+      statsTitle = document.createElement('h3')
+    }
+
+    favoriteWordsContainer.innerHTML = ''
+
     statsTitle.classList.add('statsTitle')
     statsTitle.innerText = 'Palabras favoritas'
 
-    favoriteWordsContainer.innerHTML = ''
     favoriteWords.forEach((word, index) => {
       const favoriteWordElement = this.createFavoriteWordElement({ word, index })
       favoriteWordsContainer.appendChild(favoriteWordElement)
