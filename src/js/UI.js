@@ -1,3 +1,5 @@
+import Alert from './Alert'
+import { settings } from './main'
 import StatsUI from './StatsUI'
 import { $$ } from './utils/documentSelectors'
 
@@ -7,6 +9,8 @@ export default class UI {
     this.FINISH_DELAY_ANIMATION_DURATION = 250
     this.OVERALL_ANIMATION_DURATION = columnSize * this.ANIMATION_DURATION
     this.WIN_ANIMATION_DURATION = 1000
+
+    this.alert = new Alert()
   }
 
   createBoard({ rowSize, columnSize }) {
@@ -86,6 +90,15 @@ export default class UI {
   setCorrectCell({ x, y }) {
     const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`)
 
+    cell.addEventListener('click', () => {
+      const letter = cell.innerText
+      settings.accessibility &&
+        this.alert.triggerAlert({
+          message: `La letra ${letter} está en la palabra y en la posición correcta`,
+          type: 'info'
+        })
+    })
+
     setTimeout(() => {
       cell.classList.add('correctCell')
     }, this.ANIMATION_DURATION * x)
@@ -94,6 +107,15 @@ export default class UI {
   setAlmostCorrectCell({ x, y }) {
     const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`)
 
+    cell.addEventListener('click', () => {
+      const letter = cell.innerText
+      settings.accessibility &&
+        this.alert.triggerAlert({
+          message: `La letra ${letter} está en la palabra pero en la posición incorrecta`,
+          type: 'info'
+        })
+    })
+
     setTimeout(() => {
       cell.classList.add('almostCorrectCell')
     }, this.ANIMATION_DURATION * x)
@@ -101,6 +123,12 @@ export default class UI {
 
   setWrongCell({ x, y }) {
     const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`)
+
+    cell.addEventListener('click', () => {
+      const letter = cell.innerText
+      settings.accessibility &&
+        this.alert.triggerAlert({ message: `La letra ${letter} no está en la palabra`, type: 'info' })
+    })
 
     setTimeout(() => {
       cell.classList.add('wrongCell')
