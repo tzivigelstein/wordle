@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./styles/game.css" />
     <link rel="stylesheet" href="./styles/rules.css" />
     <link rel="stylesheet" href="./styles/stats.css" />
+    <link rel="stylesheet" href="./styles/settings.css" />
     <title>Wordle (ES) - Un juego de palabras diario</title>
   </head>
   <body>
@@ -48,7 +49,7 @@
                 </button>
               </li>
               <li>
-                <button id="settingsButton" class="headerButton">
+                <button id="openSettingsButton" class="headerButton">
                   <svg
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -72,7 +73,7 @@
         <ul class="keyboardContainer"></ul>
       </section>
       <section class="rulesContainer">
-        <button id="closeRulesButton" class="closeRulesButton">
+        <button id="closeRulesButton" class="closeButton">
           <svg
             viewBox="0 0 24 24"
             width="24"
@@ -162,7 +163,7 @@
         </footer>
       </section>
       <section class="statsContainer">
-        <button id="closeStatsButton" class="closeStatsButton">
+        <button id="closeStatsButton" class="closeButton">
           <svg
             viewBox="0 0 24 24"
             width="24"
@@ -193,6 +194,88 @@
         <div class="favoriteWordsWrapper">
           <ul class="favoriteWordsContainer"></ul>
         </div>
+      </section>
+      <section class="settingsContainer">
+        <button id="closeSettingsButton" class="closeButton">
+          <svg
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="closeIcon"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <h3 class="settingsTitle">Opciones</h3>
+        <ul class="settingsList">
+          <li id="darkModeItem">
+            <label for="darkMode" class="settingContainer">
+              <span class="settingTitle">Modo oscuro</span>
+              <input id="darkMode" type="checkbox" class="hiddenInput" />
+              <label for="darkMode" id="darkModeButton" class="settingButton">
+                <span id="darkModeButtonCircle" class="settingButtonCircle"></span>
+              </label>
+            </label>
+          </li>
+          <li id="colorblindItem">
+            <label for="colorblind" class="settingContainer">
+              <span class="settingTitle">Modo para daltónicos</span>
+              <input id="colorblind" type="checkbox" class="hiddenInput" />
+              <label for="colorblind" id="colorblindButton" class="settingButton">
+                <span id="colorblindButtonCircle" class="settingButtonCircle"></span>
+              </label>
+            </label>
+          </li>
+          <li id="accessibilityItem">
+            <label for="accessibility" class="settingContainer">
+              <div>
+                <span class="settingTitle">Ayudas para accesibilidad</span>
+                <p class="settingHelper">Dar click en las letras muestra el estado. Letras más grandes.</p>
+              </div>
+              <input id="accessibility" type="checkbox" class="hiddenInput" />
+              <label for="accessibility" id="accessibilityButton" class="settingButton">
+                <span id="accessibilityButtonCircle" class="settingButtonCircle"></span>
+              </label>
+            </label>
+          </li>
+          <li id="yesterdayWordItem">
+            <label for="yesterdayWord" class="settingContainer">
+              <span class="settingTitle">Empezar con la palabra de ayer</span>
+              <input id="yesterdayWord" type="checkbox" class="hiddenInput" />
+              <label for="yesterdayWord" id="yesterdayWordButton" class="settingButton">
+                <span id="yesterdayWordButtonCircle" class="settingButtonCircle"></span>
+              </label>
+            </label>
+          </li>
+          <li id="notoggle" class="settingContainer">
+            <span class="settingTitle">Contacto</span>
+            <p class="linksContainer">
+              <a target="_blank" rel="noopener noreferrer" href="https://www.twitter.com/tzivigelstein">
+                <span>Twitter</span>
+              </a>
+              <span>|</span>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.tzivi.site">
+                <span>Website</span>
+              </a>
+            </p>
+          </li>
+        </ul>
+        <footer>
+          <p class="footerText">
+            Adaptación de
+            <a target="_blank" rel="noopener noreferrer" href="https://www.nytimes.com/games/wordle/index.html"
+              >Wordle</a
+            >
+            de
+            <a target="_blank" rel="noopener noreferrer" href="https://www.powerlanguage.co.uk/">Josh Wardle</a>
+          </p>
+        </footer>
       </section>
     </main>
   </body>
