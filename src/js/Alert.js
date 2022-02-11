@@ -5,7 +5,6 @@ export default class Alert {
 
   triggerAlert(props) {
     if (this.timeoutList.length > 0) {
-      console.log(this.timeoutList)
       this.timeoutList.forEach(timeout => clearTimeout(timeout))
       this.closeAlert()
     }
@@ -24,7 +23,6 @@ export default class Alert {
   closeAlert() {
     const alert = document.querySelector('.alertContainer')
     if (alert !== null) {
-      console.log({ alert })
       alert.remove()
     }
   }
