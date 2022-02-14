@@ -1,3 +1,7 @@
+import utils from './utils/index.js'
+
+const { isBoardFull } = utils
+
 export default class Stats {
   constructor() {
     this.played = this.getPlayedMatches()
@@ -9,14 +13,25 @@ export default class Stats {
 
     if (history.length === 0) return false
 
-    const date = new Date()
-    const today = date.toDateString()
+    const lastIndex = history.length - 1
+    const lastGame = history[lastIndex]
 
-    const index = history.length - 1
+    const { board, hasWon } = lastGame
 
-    const savedDate = new Date(history[index].date)
+    return isBoardFull({ board }) && !hasWon
+  }
 
-    return today === new Date(savedDate).toDateString()
+  hasTodayGameStarted() {
+    const history = this.getHistory()
+
+    if (history.length === 0) return false
+
+    const lastIndex = history.length - 1
+    const lastGame = history[lastIndex]
+
+    const { board, hasWon } = lastGame
+
+    return !isBoardFull({ board }) && !hasWon
   }
 
   getHistory() {
@@ -80,6 +95,25 @@ export default class Stats {
     const history = this.getHistory()
 
     const newHistory = [...history, { id: this.generateId(), date: new Date(), board, wordOfTheDay: word, hasWon }]
+
+    window.localStorage.setItem('history', JSON.stringify(newHistory))
+  }
+
+  updateMatch({ board }) {
+    const history = this.getHistory()
+
+    const lastIndex = history.length - 1
+    const lastGame = history[lastIndex]
+
+    const { id } = lastGame
+
+    const newHistory = history.map(match => {
+      if (match.id === id) {
+        return { ...match, board }
+      }
+
+      return match
+    })
 
     window.localStorage.setItem('history', JSON.stringify(newHistory))
   }

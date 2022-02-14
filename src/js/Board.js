@@ -28,6 +28,7 @@ export default class Board {
 
     this.stats = new Stats()
     this.finished = this.stats.isTodayGameFinished()
+    this.started = this.stats.hasTodayGameStarted()
 
     this.boardUI.createBoard({ columnSize: this.getColumnSize(), rowSize: this.getRowSize() })
     this.populateBoard()
@@ -68,13 +69,26 @@ export default class Board {
       const lastBoard = history[history.length - 1].board
       this.board = lastBoard
       this.statsUI.setWordOfTheDay({ word: this.word })
-
       //TODO refactor to an async interval
       setInterval(() => {
         this.statsUI.setNextWordTimer({ time: this.stats.getNextWordTime() })
       }, 1000)
 
       this.boardUI.populateBoard({ board: lastBoard })
+    } else if (!this.finished && this.started) {
+      const history = this.stats.getHistory()
+      const lastBoard = history[history.length - 1].board
+      this.board = lastBoard
+      this.boardUI.populateBoard({ board: lastBoard })
+
+      function getFirstIndexPointer(board) {
+        const rowIndex = board.findIndex(row => row.includes(''))
+        const columnIndex = board[rowIndex].findIndex(letter => letter === '')
+
+        return [rowIndex, columnIndex]
+      }
+
+      this.pointer = getFirstIndexPointer(lastBoard)
     } else {
       for (let i = 0; i < this.rowSize; i++) {
         const row = []
@@ -168,7 +182,7 @@ export default class Board {
       }
     })
 
-    if (this.isWordCorrect({ userWord }) || isBoardFull()) {
+    if (this.isWordCorrect({ userWord }) || isBoardFull({ board: this.getBoard() })) {
       this.setFinished(true)
 
       this.stats.setPlayedMatch({
@@ -194,18 +208,24 @@ export default class Board {
       return
     }
 
-    if (!this.isWordCorrect({ userWord }) && this.isBoardFull()) {
+    if (!this.isWordCorrect({ userWord }) && isBoardFull({ board: this.getBoard() })) {
       this.boardUI.openStatsPage()
 
       return
     }
 
     // Neither finished or full
-    this.stats.setPlayedMatch({
-      board: this.getBoard(),
-      word: this.getWord(),
-      hasWon: this.isWordCorrect({ userWord })
-    })
+    if (this.stats.hasTodayGameStarted()) {
+      this.stats.updateMatch({
+        board: this.getBoard()
+      })
+    } else {
+      this.stats.setPlayedMatch({
+        board: this.getBoard(),
+        word: this.getWord(),
+        hasWon: this.isWordCorrect({ userWord })
+      })
+    }
 
     this.pointer = [y + 1, 0]
   }
