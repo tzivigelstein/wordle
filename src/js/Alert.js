@@ -1,9 +1,15 @@
+import utils from './utils/index.js'
+
+const { $, createElement } = utils
+
 export default class Alert {
   constructor() {
     this.timeoutList = []
   }
 
   triggerAlert(props) {
+    const { type } = props
+
     if (this.timeoutList.length > 0) {
       this.timeoutList.forEach(timeout => clearTimeout(timeout))
       this.closeAlert()
@@ -11,7 +17,7 @@ export default class Alert {
 
     this.createAlert(props)
 
-    if (props.type !== 'success') {
+    if (type !== 'success') {
       const timeout = setTimeout(() => {
         this.closeAlert()
       }, 2000)
@@ -21,7 +27,7 @@ export default class Alert {
   }
 
   closeAlert() {
-    const alert = document.querySelector('.alertContainer')
+    const alert = $('.alertContainer')
     if (alert !== null) {
       alert.remove()
     }
@@ -34,13 +40,17 @@ export default class Alert {
       info: 'alertInfo'
     }
 
-    const alertContainer = document.createElement('div')
-    alertContainer.classList.add('alertContainer')
-    alertContainer.classList.add(TYPES[type])
+    const alertContainer = createElement({
+      elementType: 'div',
+      innerText: null,
+      classes: ['alertContainer', TYPES[type]]
+    })
 
-    const alertMessage = document.createElement('p')
-    alertMessage.innerText = message
-    alertMessage.classList.add('alertMessage')
+    const alertMessage = createElement({
+      elementType: 'p',
+      innerText: message,
+      classes: ['alertMessage']
+    })
 
     alertContainer.appendChild(alertMessage)
 
