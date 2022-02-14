@@ -18,7 +18,7 @@ export default class Stats {
 
     const { board, hasWon } = lastGame
 
-    return isBoardFull({ board }) && !hasWon
+    return isBoardFull({ board }) || hasWon
   }
 
   hasTodayGameStarted() {
@@ -41,7 +41,9 @@ export default class Stats {
   }
 
   getPlayedMatches() {
-    return this.getHistory().length
+    const history = this.getHistory()
+    const playedMatches = history.filter(match => match.hasWon || isBoardFull({ board: match.board }))
+    return playedMatches.length
   }
 
   getWinRate() {
@@ -99,7 +101,7 @@ export default class Stats {
     window.localStorage.setItem('history', JSON.stringify(newHistory))
   }
 
-  updateMatch({ board }) {
+  updateMatch({ board, hasWon }) {
     const history = this.getHistory()
 
     const lastIndex = history.length - 1
@@ -109,7 +111,8 @@ export default class Stats {
 
     const newHistory = history.map(match => {
       if (match.id === id) {
-        return { ...match, board }
+        const newHasWon = hasWon !== undefined ? hasWon : match.hasWon
+        return { ...match, board, hasWon: newHasWon }
       }
 
       return match
