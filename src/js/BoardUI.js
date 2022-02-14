@@ -1,12 +1,17 @@
 import Alert from './Alert'
 import { settings } from './main'
 import StatsUI from './StatsUI'
+import getRepeatedLettersIndexes from './utils/getRepeatedLettersIndexes'
 import utils from './utils/index.js'
 
 const { $$ } = utils
 
-export default class UI {
-  constructor({ columnSize }) {
+export default class BoardUI {
+  constructor(props) {
+    const { columnSize, word } = props
+
+    this.word = word
+
     this.ANIMATION_DURATION = 200
     this.FINISH_DELAY_ANIMATION_DURATION = 250
     this.OVERALL_ANIMATION_DURATION = columnSize * this.ANIMATION_DURATION
@@ -19,16 +24,16 @@ export default class UI {
     const board = document.querySelector('.board')
     const boardFragment = document.createDocumentFragment()
 
-    for (let i = 0; i < rowSize; i++) {
+    for (let rowIndex = 0; rowIndex < rowSize; rowIndex++) {
       const row = document.createElement('div')
       row.classList.add('boardRow')
-      row.setAttribute('data-y', i)
+      row.setAttribute('data-y', rowIndex)
 
-      for (let j = 0; j < columnSize; j++) {
+      for (let columnIndex = 0; columnIndex < columnSize; columnIndex++) {
         const cell = document.createElement('div')
         cell.classList.add('cell')
-        cell.setAttribute('data-x', j)
-        cell.setAttribute('data-y', i)
+        cell.setAttribute('data-x', columnIndex)
+        cell.setAttribute('data-y', rowIndex)
         row.appendChild(cell)
       }
 
@@ -36,6 +41,38 @@ export default class UI {
     }
 
     board.appendChild(boardFragment)
+  }
+
+  populateBoard({ board }) {
+    board.forEach((row, y) => {
+      row.forEach((letter, x) => {
+        if (this.isValidLetter(letter)) {
+          this.setLetter({ letter, position: { y, x } })
+          const compareWords = { firstWord: row, secondWord: this.word.split('') }
+
+          const repeatedLettersIndexes = getRepeatedLettersIndexes(compareWords)
+          row.forEach((letter, index) => {
+            const isIncluded = this.word.split('').includes(letter)
+            const equalIndex = repeatedLettersIndexes.includes(index)
+
+            if (isIncluded && equalIndex) {
+              this.setCellStatus({ x: index, y, className: 'correctCell' })
+              // this.correctLetters.push(letter)
+            } else if (isIncluded && !equalIndex) {
+              this.setCellStatus({ x: index, y, className: 'almostCorrectCell' })
+              // this.almostCorrectLetters.push(letter)
+            } else if (!isIncluded && !equalIndex) {
+              this.setCellStatus({ x: index, y, className: 'wrongCell' })
+              // this.wrongLetters.push(letter)
+            }
+          })
+        }
+      })
+    })
+  }
+
+  isValidLetter(letter) {
+    return letter !== ''
   }
 
   getAllLetterCells() {
@@ -89,51 +126,26 @@ export default class UI {
     }, WRONG_WORD_ANIMATION_DURATION)
   }
 
-  setCorrectCell({ x, y }) {
+  setCellStatus({ x, y, className }) {
     const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`)
+
+    const MESSAGES = {
+      correctCell: letter => `La letra ${letter} está en la palabra y en la posición correcta`,
+      almostCorrectCell: letter => `La letra ${letter} está en la palabra pero en la posición incorrecta`,
+      wrongCell: letter => `La letra ${letter} no está en la palabra`
+    }
 
     cell.addEventListener('click', () => {
       const letter = cell.innerText
       settings.accessibility &&
         this.alert.triggerAlert({
-          message: `La letra ${letter} está en la palabra y en la posición correcta`,
+          message: () => MESSAGES[className](letter),
           type: 'info'
         })
     })
 
     setTimeout(() => {
-      cell.classList.add('correctCell')
-    }, this.ANIMATION_DURATION * x)
-  }
-
-  setAlmostCorrectCell({ x, y }) {
-    const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`)
-
-    cell.addEventListener('click', () => {
-      const letter = cell.innerText
-      settings.accessibility &&
-        this.alert.triggerAlert({
-          message: `La letra ${letter} está en la palabra pero en la posición incorrecta`,
-          type: 'info'
-        })
-    })
-
-    setTimeout(() => {
-      cell.classList.add('almostCorrectCell')
-    }, this.ANIMATION_DURATION * x)
-  }
-
-  setWrongCell({ x, y }) {
-    const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`)
-
-    cell.addEventListener('click', () => {
-      const letter = cell.innerText
-      settings.accessibility &&
-        this.alert.triggerAlert({ message: `La letra ${letter} no está en la palabra`, type: 'info' })
-    })
-
-    setTimeout(() => {
-      cell.classList.add('wrongCell')
+      cell.classList.add(className)
     }, this.ANIMATION_DURATION * x)
   }
 
