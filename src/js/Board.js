@@ -4,9 +4,8 @@ import utils from './utils/index.js'
 import BoardUI from './BoardUI.js'
 import Stats from './Stats.js'
 import StatsUI from './StatsUI.js'
-import getRepeatedLettersIndexes from './utils/getRepeatedLettersIndexes.js'
 
-const { getWordOfTheDay } = utils
+const { getWordOfTheDay, isBoardFull, getRepeatedLettersIndexes } = utils
 
 export default class Board {
   constructor(params) {
@@ -169,7 +168,7 @@ export default class Board {
       }
     })
 
-    if (this.isWordCorrect({ userWord }) || this.isBoardFull()) {
+    if (this.isWordCorrect({ userWord }) || isBoardFull()) {
       this.setFinished(true)
 
       this.stats.setPlayedMatch({
@@ -201,6 +200,13 @@ export default class Board {
       return
     }
 
+    // Neither finished or full
+    this.stats.setPlayedMatch({
+      board: this.getBoard(),
+      word: this.getWord(),
+      hasWon: this.isWordCorrect({ userWord })
+    })
+
     this.pointer = [y + 1, 0]
   }
 
@@ -222,22 +228,5 @@ export default class Board {
 
   isWordCorrect({ userWord }) {
     return userWord === this.word
-  }
-
-  isBoardFull() {
-    const board = this.getBoard()
-
-    let hasFinished = false
-    for (let row of board) {
-      for (let letter of row) {
-        if (letter === '') {
-          hasFinished = false
-          break
-        }
-        hasFinished = true
-      }
-    }
-
-    return hasFinished
   }
 }
