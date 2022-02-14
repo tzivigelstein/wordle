@@ -1,6 +1,7 @@
 import { deleteButtonSVG } from './deleteButtonSVG.js'
 import utils from './utils/index.js'
 import keyboardLetters from './keyboardLetters.js'
+import { $addClass } from './utils/dom.js'
 
 const { $, $$ } = utils
 
@@ -54,15 +55,19 @@ export default class Keyboard {
     })
   }
 
-  updateLettersStatus([correctLetters, almostCorrectLetters, wrongLetters]) {
+  updateLettersStatus(keys) {
+    const [correctLetters, almostCorrectLetters, wrongLetters] = keys
     const letters = $$('.keyboardButton')
+
     letters.forEach(letter => {
-      if (correctLetters.includes(letter.innerHTML)) {
-        letter.classList.add('correctKeyboardLetter')
-      } else if (almostCorrectLetters.includes(letter.innerHTML)) {
-        letter.classList.add('almostCorrectKeyboardLetter')
-      } else if (wrongLetters.includes(letter.innerHTML)) {
-        letter.classList.add('wrongKeyboardLetter')
+      const { innerHTML } = letter
+
+      if (correctLetters.includes(innerHTML)) {
+        $addClass(letter, 'correctKeyboardLetter')
+      } else if (almostCorrectLetters.includes(innerHTML)) {
+        $addClass(letter, 'almostCorrectKeyboardLetter')
+      } else if (wrongLetters.includes(innerHTML)) {
+        $addClass(letter, 'wrongKeyboardLetter')
       }
     })
   }
