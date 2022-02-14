@@ -34,11 +34,6 @@ export default class Board {
     this.populateBoard()
   }
 
-  consoleWord() {
-    const styles = 'font-size: 1.5rem; font-family: sans-serif; background-color: #09f;'
-    console.log(`%cThe word of the day is ${this.word}`, styles)
-  }
-
   getWord() {
     return this.word
   }
@@ -73,7 +68,7 @@ export default class Board {
       setInterval(() => {
         this.statsUI.setNextWordTimer({ time: this.stats.getNextWordTime() })
       }, 1000)
-
+      
       this.boardUI.populateBoard({ board: lastBoard })
     } else if (!this.finished && this.started) {
       const history = this.stats.getHistory()
@@ -185,11 +180,18 @@ export default class Board {
     if (this.isWordCorrect({ userWord }) || isBoardFull({ board: this.getBoard() })) {
       this.setFinished(true)
 
-      this.stats.setPlayedMatch({
-        board: this.getBoard(),
-        word: this.getWord(),
-        hasWon: this.isWordCorrect({ userWord })
-      })
+      if (this.stats.hasTodayGameStarted()) {
+        this.stats.updateMatch({
+          board: this.getBoard(),
+          hasWon: this.isWordCorrect({ userWord })
+        })
+      } else {
+        this.stats.setPlayedMatch({
+          board: this.getBoard(),
+          word: this.getWord(),
+          hasWon: this.isWordCorrect({ userWord })
+        })
+      }
 
       this.statsUI.setPlayed({ played: this.stats.getPlayedMatches() })
       this.statsUI.setWinRate({ winRate: this.stats.getWinRate() })
