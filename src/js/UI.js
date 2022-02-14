@@ -1,7 +1,9 @@
 import Alert from './Alert'
 import { settings } from './main'
 import StatsUI from './StatsUI'
-import { $$ } from './utils/documentSelectors'
+import utils from './utils/index.js'
+
+const { $$ } = utils
 
 export default class UI {
   constructor({ columnSize }) {
