@@ -1,5 +1,5 @@
-import { $, $$ } from './documentSelectors.js'
 import getWordOfTheDay from './getWordOfTheDay'
 import getRepeatedLettersIndexes from './getRepeatedLettersIndexes.js'
+import { $, $$, createElement } from './dom.js'
 
-export default { $, $$, getWordOfTheDay, getRepeatedLettersIndexes }
+export default { $, $$, getWordOfTheDay, getRepeatedLettersIndexes, createElement }
