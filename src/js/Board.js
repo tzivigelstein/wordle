@@ -127,7 +127,7 @@ export default class Board {
 
   nextWord() {
     const [y] = this.getPointer()
-    const userWord = this.getUserWord()
+    const userWord = this.getUserWord({ rowIndex: y })
 
     //Check that the word has $size letters
     if (this.isProperLength({ userWord })) return
@@ -216,8 +216,8 @@ export default class Board {
     return this.words.includes(userWord)
   }
 
-  getUserWord() {
-    return this.getBoard()[y].join('')
+  getUserWord({ rowIndex }) {
+    return this.getBoard()[rowIndex].join('')
   }
 
   isWordCorrect({ userWord }) {
