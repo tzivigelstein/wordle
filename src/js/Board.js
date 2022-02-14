@@ -1,11 +1,12 @@
 import dictionary from './dictionary.js'
 import Alert from './Alert.js'
 import utils from './utils/index.js'
-import UI from './UI.js'
+import BoardUI from './BoardUI.js'
 import Stats from './Stats.js'
 import StatsUI from './StatsUI.js'
+import getRepeatedLettersIndexes from './utils/getRepeatedLettersIndexes.js'
 
-const { getWordOfTheDay, getRepeatedLettersIndexes } = utils
+const { getWordOfTheDay } = utils
 
 export default class Board {
   constructor(params) {
@@ -14,7 +15,7 @@ export default class Board {
     this.columnSize = size
     this.rowSize = size + 1
     this.board = []
-    this.words = dictionary.filter(word => word.length === this.size)
+    this.words = dictionary
     this.word = getWordOfTheDay(this.words)
     this.pointer = [0, 0]
 
@@ -23,13 +24,13 @@ export default class Board {
     this.wrongLetters = []
 
     this.alert = new Alert()
-    this.ui = new UI({ columnSize: this.getColumnSize() })
+    this.boardUI = new BoardUI({ columnSize: this.getColumnSize(), word: this.word })
     this.statsUI = new StatsUI()
 
     this.stats = new Stats()
     this.finished = this.stats.isTodayGameFinished()
 
-    this.ui.createBoard({ columnSize: this.getColumnSize(), rowSize: this.getRowSize() })
+    this.boardUI.createBoard({ columnSize: this.getColumnSize(), rowSize: this.getRowSize() })
     this.populateBoard()
   }
 
@@ -68,10 +69,13 @@ export default class Board {
       const lastBoard = history[history.length - 1].board
       this.board = lastBoard
       this.statsUI.setWordOfTheDay({ word: this.word })
+
+      //TODO refactor to an async interval
       setInterval(() => {
         this.statsUI.setNextWordTimer({ time: this.stats.getNextWordTime() })
       }, 1000)
-      this.populateUIBoard({ board: lastBoard })
+
+      this.boardUI.populateBoard({ board: lastBoard })
     } else {
       for (let i = 0; i < this.rowSize; i++) {
         const row = []
@@ -85,34 +89,6 @@ export default class Board {
     }
   }
 
-  populateUIBoard({ board }) {
-    board.forEach((row, y) => {
-      row.forEach((letter, x) => {
-        if (letter !== '') {
-          this.ui.setLetter({ letter, position: { y, x } })
-          const compareWords = { firstWord: row, secondWord: this.word.split('') }
-
-          const repeatedLettersIndexes = getRepeatedLettersIndexes(compareWords)
-          row.forEach((letter, index) => {
-            const isIncluded = this.word.split('').includes(letter)
-            const equalIndex = repeatedLettersIndexes.includes(index)
-
-            if (isIncluded && equalIndex) {
-              this.ui.setCorrectCell({ x: index, y })
-              this.correctLetters.push(letter)
-            } else if (isIncluded && !equalIndex) {
-              this.ui.setAlmostCorrectCell({ x: index, y })
-              this.almostCorrectLetters.push(letter)
-            } else if (!isIncluded && !equalIndex) {
-              this.ui.setWrongCell({ x: index, y })
-              this.wrongLetters.push(letter)
-            }
-          })
-        }
-      })
-    })
-  }
-
   setLetter(letter) {
     if (this.finished) return
 
@@ -122,7 +98,7 @@ export default class Board {
 
     this.board[y][x] = letter
 
-    this.ui.setLetter({ letter, position: { y, x } })
+    this.boardUI.setLetter({ letter, position: { y, x } })
 
     this.updatePointer(x => x + 1)
   }
@@ -137,7 +113,7 @@ export default class Board {
 
     this.board[y][previousPosition] = ''
 
-    this.ui.removeLetter({ position: { y, x: previousPosition } })
+    this.boardUI.removeLetter({ position: { y, x: previousPosition } })
 
     this.updatePointer(x => x - 1)
   }
@@ -151,15 +127,21 @@ export default class Board {
 
   nextWord() {
     const [y] = this.getPointer()
-    const userWord = this.getBoard()[y].join('')
+    const userWord = this.getUserWord()
 
     //Check that the word has $size letters
-    if (userWord.length !== this.size) return
+    if (this.isProperLength({ userWord })) return
 
     //Check that the word is in the dictionary
-    if (!this.words.includes(userWord)) {
-      this.alert.triggerAlert({ message: 'La palabra no está en el diccionario', type: 'error' })
-      this.ui.setWrongRow({ position: { y } })
+    if (!this.isWordAccepted({ userWord })) {
+      const alertConfig = {
+        message: 'La palabra no está en el diccionario',
+        type: 'error'
+      }
+
+      this.alert.triggerAlert(alertConfig)
+      this.boardUI.setWrongRow({ position: { y } })
+
       return
     }
 
@@ -167,35 +149,35 @@ export default class Board {
     const userWordLetters = userWord.split('')
     const wordLetters = this.word.split('')
 
-    const compareWords = { firstWord: userWordLetters, secondWord: wordLetters }
+    const comparingWords = { firstWord: userWordLetters, secondWord: wordLetters }
 
-    const repeatedLettersIndexes = getRepeatedLettersIndexes(compareWords)
+    const repeatedLettersIndexes = getRepeatedLettersIndexes(comparingWords)
 
     userWordLetters.forEach((letter, index) => {
       const isIncluded = wordLetters.includes(letter)
-      const equalIndex = repeatedLettersIndexes.includes(index)
+      const hasEqualIndex = repeatedLettersIndexes.includes(index)
 
-      if (isIncluded && equalIndex) {
-        this.ui.setCorrectCell({ x: index, y })
+      if (isIncluded && hasEqualIndex) {
+        this.boardUI.setCellStatus({ x: index, y, className: 'correctCell' })
         this.correctLetters.push(letter)
-      } else if (isIncluded && !equalIndex) {
-        this.ui.setAlmostCorrectCell({ x: index, y })
+      } else if (isIncluded && !hasEqualIndex) {
+        this.boardUI.setCellStatus({ x: index, y, className: 'almostCorrectCell' })
         this.almostCorrectLetters.push(letter)
-      } else if (!isIncluded && !equalIndex) {
-        this.ui.setWrongCell({ x: index, y })
+      } else if (!isIncluded && !hasEqualIndex) {
+        this.boardUI.setCellStatus({ x: index, y, className: 'wrongCell' })
         this.wrongLetters.push(letter)
       }
     })
 
-    if (this.isWordCorrect({ userWord })) {
-      this.finished = true
+    if (this.isWordCorrect({ userWord }) || this.isBoardFull()) {
+      this.setFinished(true)
+
       this.stats.setPlayedMatch({
         board: this.getBoard(),
         word: this.getWord(),
         hasWon: this.isWordCorrect({ userWord })
       })
 
-      this.ui.setCorrectRow({ position: { y } })
       this.statsUI.setPlayed({ played: this.stats.getPlayedMatches() })
       this.statsUI.setWinRate({ winRate: this.stats.getWinRate() })
       this.statsUI.setWordOfTheDay({ word: this.word })
@@ -204,33 +186,38 @@ export default class Board {
       setInterval(() => {
         this.statsUI.setNextWordTimer({ time: this.stats.getNextWordTime() })
       }, 1000)
+    }
 
-      this.ui.openStatsPage()
+    if (this.isWordCorrect({ userWord })) {
+      this.boardUI.setCorrectRow({ position: { y } })
+      this.boardUI.openStatsPage()
 
       return
     }
 
     if (!this.isWordCorrect({ userWord }) && this.isBoardFull()) {
-      this.finished = true
-      this.stats.setPlayedMatch({
-        board: this.getBoard(),
-        word: this.getWord(),
-        hasWon: this.isWordCorrect({ userWord })
-      })
+      this.boardUI.openStatsPage()
 
-      this.statsUI.setPlayed({ played: this.stats.getPlayedMatches() })
-      this.statsUI.setWinRate({ winRate: this.stats.getWinRate() })
-      this.statsUI.setWordOfTheDay({ word: this.word })
-      this.statsUI.setFavoriteWords({ favoriteWords: this.stats.getFavoriteWords() })
-
-      setInterval(() => {
-        this.statsUI.setNextWordTimer({ time: this.stats.getNextWordTime() })
-      }, 1000)
-
-      this.ui.openStatsPage()
+      return
     }
 
     this.pointer = [y + 1, 0]
+  }
+
+  setFinished(finished) {
+    this.finished = finished
+  }
+
+  isProperLength({ userWord }) {
+    return userWord.length !== this.size
+  }
+
+  isWordAccepted({ userWord }) {
+    return this.words.includes(userWord)
+  }
+
+  getUserWord() {
+    return this.getBoard()[y].join('')
   }
 
   isWordCorrect({ userWord }) {
