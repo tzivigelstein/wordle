@@ -4,7 +4,7 @@ import StatsUI from './StatsUI'
 import getRepeatedLettersIndexes from './utils/getRepeatedLettersIndexes'
 import utils from './utils/index.js'
 
-const { $$ } = utils
+const { $, $$ } = utils
 
 export default class BoardUI {
   constructor(props) {
@@ -16,12 +16,13 @@ export default class BoardUI {
     this.FINISH_DELAY_ANIMATION_DURATION = 250
     this.OVERALL_ANIMATION_DURATION = columnSize * this.ANIMATION_DURATION
     this.WIN_ANIMATION_DURATION = 1000
+    this.WRONG_WORD_ANIMATION_DURATION = 600
 
     this.alert = new Alert()
   }
 
   createBoard({ rowSize, columnSize }) {
-    const board = document.querySelector('.board')
+    const board = $('.board')
     const boardFragment = document.createDocumentFragment()
 
     for (let rowIndex = 0; rowIndex < rowSize; rowIndex++) {
@@ -84,7 +85,7 @@ export default class BoardUI {
     const cells = this.getAllLetterCells()
 
     for (let cell of cells) {
-      if (cell.getAttribute('data-x') === String(x) && cell.getAttribute('data-y') === String(y)) {
+      if (cell.getAttribute('data-x') == x && cell.getAttribute('data-y') == y) {
         cell.classList.add('activeCell')
 
         const span = document.createElement('span')
@@ -99,7 +100,7 @@ export default class BoardUI {
   removeLetter({ position }) {
     const { y, x } = position
 
-    const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`)
+    const cell = $(`[data-x="${x}"][data-y="${y}"]`)
 
     cell.innerHTML = ''
     cell.classList.remove('activeCell')
@@ -108,26 +109,25 @@ export default class BoardUI {
   setCorrectRow({ position }) {
     const { y } = position
     setTimeout(() => {
-      const actualRow = document.querySelector(`[data-y="${y}"].boardRow`)
+      const actualRow = $(`[data-y="${y}"].boardRow`)
       actualRow.classList.add('boardRowCorrect')
     }, this.OVERALL_ANIMATION_DURATION)
   }
 
   setWrongRow({ position }) {
     const { y } = position
-    const WRONG_WORD_ANIMATION_DURATION = 600
 
-    const row = document.querySelector(`[data-y="${y}"].boardRow`)
+    const row = $(`[data-y="${y}"].boardRow`)
 
     row.classList.add('boardRowWrong')
 
     setTimeout(() => {
       row.classList.remove('boardRowWrong')
-    }, WRONG_WORD_ANIMATION_DURATION)
+    }, this.WRONG_WORD_ANIMATION_DURATION)
   }
 
   setCellStatus({ x, y, className }) {
-    const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`)
+    const cell = $(`[data-x="${x}"][data-y="${y}"]`)
 
     const MESSAGES = {
       correctCell: letter => `La letra ${letter} está en la palabra y en la posición correcta`,

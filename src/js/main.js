@@ -117,16 +117,16 @@ settingsList.forEach(el => {
 })
 
 function setDarkMode(value) {
-  const html = document.querySelector('html')
+  const html = $('html')
   html.toggleAttribute('data-theme', value)
 }
 
 function setColorblindMode(value) {
-  const html = document.querySelector('html')
+  const html = $('html')
   html.toggleAttribute('data-scheme', value)
 }
 
 function setAccessibilityMode(value) {
-  const html = document.querySelector('html')
+  const html = $('html')
   html.toggleAttribute('data-accessibility', value)
 }

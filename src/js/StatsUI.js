@@ -6,12 +6,12 @@ export default class StatsUI {
   constructor() {}
 
   setPlayed({ played }) {
-    const playedElement = document.querySelector('#played')
+    const playedElement = $('#played')
     playedElement.innerText = played
   }
 
   setWinRate({ winRate }) {
-    const playedElement = document.querySelector('#winRate')
+    const playedElement = $('#winRate')
     playedElement.innerText = `${winRate}%`
   }
 
@@ -38,7 +38,7 @@ export default class StatsUI {
   }
 
   openStatsPage() {
-    const stats = document.querySelector('.statsContainer')
+    const stats = $('.statsContainer')
     stats.classList.add('statsContainerActive')
   }
 
