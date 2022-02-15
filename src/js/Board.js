@@ -68,7 +68,7 @@ export default class Board {
       setInterval(() => {
         this.statsUI.setNextWordTimer({ time: this.stats.getNextWordTime() })
       }, 1000)
-      
+
       this.boardUI.populateBoard({ board: lastBoard })
     } else if (!this.finished && this.started) {
       const history = this.stats.getHistory()
@@ -134,6 +134,8 @@ export default class Board {
   }
 
   nextWord() {
+    if (this.finished) return
+
     const [y] = this.getPointer()
     const userWord = this.getUserWord({ rowIndex: y })
 
