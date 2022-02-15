@@ -69,6 +69,8 @@ export default class Board {
         this.statsUI.setNextWordTimer({ time: this.stats.getNextWordTime() })
       }, 1000)
 
+      this.setKeyboardLettersStatus()
+
       this.boardUI.populateBoard({ board: lastBoard })
     } else if (!this.finished && this.started) {
       const history = this.stats.getHistory()
@@ -76,14 +78,9 @@ export default class Board {
       this.board = lastBoard
       this.boardUI.populateBoard({ board: lastBoard })
 
-      function getFirstIndexPointer(board) {
-        const rowIndex = board.findIndex(row => row.includes(''))
-        const columnIndex = board[rowIndex].findIndex(letter => letter === '')
+      this.setKeyboardLettersStatus()
 
-        return [rowIndex, columnIndex]
-      }
-
-      this.pointer = getFirstIndexPointer(lastBoard)
+      this.pointer = this.getFirstIndexPointer(lastBoard)
     } else {
       for (let i = 0; i < this.rowSize; i++) {
         const row = []
@@ -95,6 +92,37 @@ export default class Board {
         this.board.push(row)
       }
     }
+  }
+
+  getFirstIndexPointer(board) {
+    const rowIndex = board.findIndex(row => row.includes(''))
+    const columnIndex = board[rowIndex].findIndex(letter => letter === '')
+
+    return [rowIndex, columnIndex]
+  }
+
+  setKeyboardLettersStatus() {
+    this.board.forEach(row => {
+      row.forEach(letter => {
+        if (this.isValidLetter(letter)) {
+          const compareWords = { firstWord: row, secondWord: this.word.split('') }
+
+          const repeatedLettersIndexes = getRepeatedLettersIndexes(compareWords)
+          row.forEach((letter, index) => {
+            const isIncluded = this.word.split('').includes(letter)
+            const equalIndex = repeatedLettersIndexes.includes(index)
+
+            if (isIncluded && equalIndex && !this.correctLetters.includes(letter)) {
+              this.correctLetters.push(letter)
+            } else if (isIncluded && !equalIndex && !this.almostCorrectLetters.includes(letter)) {
+              this.almostCorrectLetters.push(letter)
+            } else if (!isIncluded && !equalIndex && !this.wrongLetters.includes(letter)) {
+              this.wrongLetters.push(letter)
+            }
+          })
+        }
+      })
+    })
   }
 
   setLetter(letter) {
@@ -131,6 +159,10 @@ export default class Board {
     if (this.rowSize - 1 >= y) {
       this.pointer = [y, callback(x)]
     }
+  }
+
+  isValidLetter(letter) {
+    return letter !== ''
   }
 
   nextWord() {

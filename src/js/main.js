@@ -20,6 +20,8 @@ statsUI.setFavoriteWords({ favoriteWords: stats.getFavoriteWords() })
 
 const keyboard = new Keyboard()
 
+keyboard.updateLettersStatus(board.getLettersStatus())
+
 keyboard.onClick(({ letter, id }) => {
   const intID = parseInt(id)
   const SEND_BUTTON_ID = 20
