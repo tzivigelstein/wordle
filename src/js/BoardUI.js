@@ -139,7 +139,7 @@ export default class BoardUI {
       const letter = cell.innerText
       settings.accessibility &&
         this.alert.triggerAlert({
-          message: () => MESSAGES[className](letter),
+          message: MESSAGES[className](letter),
           type: 'info'
         })
     })
