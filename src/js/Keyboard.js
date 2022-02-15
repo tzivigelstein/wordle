@@ -63,11 +63,11 @@ export default class Keyboard {
       const { innerHTML } = letter
 
       if (correctLetters.includes(innerHTML)) {
-        $addClass(letter, 'correctKeyboardLetter')
+        $addClass(letter, ['correctKeyboardLetter'])
       } else if (almostCorrectLetters.includes(innerHTML)) {
-        $addClass(letter, 'almostCorrectKeyboardLetter')
+        $addClass(letter, ['almostCorrectKeyboardLetter'])
       } else if (wrongLetters.includes(innerHTML)) {
-        $addClass(letter, 'wrongKeyboardLetter')
+        $addClass(letter, ['wrongKeyboardLetter'])
       }
     })
   }
