@@ -16,7 +16,12 @@ export default class Stats {
     const lastIndex = history.length - 1
     const lastGame = history[lastIndex]
 
-    const { board, hasWon } = lastGame
+    const { board, hasWon, date } = lastGame
+
+    const today = new Date().toLocaleDateString()
+    const gameDate = new Date(date).toLocaleDateString()
+
+    if (today !== gameDate) return false
 
     return isBoardFull({ board }) || hasWon
   }
