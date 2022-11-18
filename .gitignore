@@ -2,3 +2,6 @@
 build
 # Modules
 node_modules
+
+# Environment
+.env
