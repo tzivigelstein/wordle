@@ -11,7 +11,7 @@ export default class Alert {
     const { type } = props
 
     if (this.timeoutList.length > 0) {
-      this.timeoutList.forEach(timeout => clearTimeout(timeout))
+      this.timeoutList.forEach((timeout) => clearTimeout(timeout))
       this.closeAlert()
     }
 
@@ -37,19 +37,19 @@ export default class Alert {
     const TYPES = {
       success: 'alertSuccess',
       error: 'alertError',
-      info: 'alertInfo'
+      info: 'alertInfo',
     }
 
     const alertContainer = createElement({
       elementType: 'div',
       innerText: null,
-      classes: ['alertContainer', TYPES[type]]
+      classes: ['alertContainer', TYPES[type]],
     })
 
     const alertMessage = createElement({
       elementType: 'p',
       innerText: message,
-      classes: ['alertMessage']
+      classes: ['alertMessage'],
     })
 
     alertContainer.appendChild(alertMessage)

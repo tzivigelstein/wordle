@@ -5,9 +5,6 @@ export default class Setting {
     this.el = el
   }
 
-  log(param) {
-  }
-
   getInitialState() {
     return window.localStorage.getItem(this.id) === 'true'
   }

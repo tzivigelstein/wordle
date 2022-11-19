@@ -50,8 +50,11 @@ export default class BoardUI {
         if (this.isValidLetter(letter)) {
           this.setLetter({ letter, position: { y, x } })
 
-          const repeatedLettersIndexes = getRepeatedLettersIndexes(row, this.word)
-          
+          const repeatedLettersIndexes = getRepeatedLettersIndexes(
+            row,
+            this.word
+          )
+
           row.forEach((letter, index) => {
             const isIncluded = this.word.split('').includes(letter)
             const equalIndex = repeatedLettersIndexes.includes(index)
@@ -60,7 +63,11 @@ export default class BoardUI {
               this.setCellStatus({ x: index, y, className: 'correctCell' })
               // this.correctLetters.push(letter)
             } else if (isIncluded && !equalIndex) {
-              this.setCellStatus({ x: index, y, className: 'almostCorrectCell' })
+              this.setCellStatus({
+                x: index,
+                y,
+                className: 'almostCorrectCell',
+              })
               // this.almostCorrectLetters.push(letter)
             } else if (!isIncluded && !equalIndex) {
               this.setCellStatus({ x: index, y, className: 'wrongCell' })
@@ -85,7 +92,10 @@ export default class BoardUI {
     const cells = this.getAllLetterCells()
 
     for (let cell of cells) {
-      if (cell.getAttribute('data-x') == x && cell.getAttribute('data-y') == y) {
+      if (
+        cell.getAttribute('data-x') == x &&
+        cell.getAttribute('data-y') == y
+      ) {
         cell.classList.add('activeCell')
 
         const span = document.createElement('span')
@@ -130,9 +140,11 @@ export default class BoardUI {
     const cell = $(`[data-x="${x}"][data-y="${y}"]`)
 
     const MESSAGES = {
-      correctCell: letter => `La letra ${letter} está en la palabra y en la posición correcta`,
-      almostCorrectCell: letter => `La letra ${letter} está en la palabra pero en la posición incorrecta`,
-      wrongCell: letter => `La letra ${letter} no está en la palabra`
+      correctCell: (letter) =>
+        `La letra ${letter} está en la palabra y en la posición correcta`,
+      almostCorrectCell: (letter) =>
+        `La letra ${letter} está en la palabra pero en la posición incorrecta`,
+      wrongCell: (letter) => `La letra ${letter} no está en la palabra`,
     }
 
     cell.addEventListener('click', () => {
@@ -140,7 +152,7 @@ export default class BoardUI {
       settings.accessibility &&
         this.alert.triggerAlert({
           message: MESSAGES[className](letter),
-          type: 'info'
+          type: 'info',
         })
     })
 

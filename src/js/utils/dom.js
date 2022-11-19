@@ -8,6 +8,7 @@ export function createElement(props) {
   return element
 }
 
-export const $ = param => document.querySelector(param)
-export const $$ = param => document.querySelectorAll(param)
-export const $addClass = (element, classNames) => element.classList.add(...classNames)
+export const $ = (param) => document.querySelector(param)
+export const $$ = (param) => document.querySelectorAll(param)
+export const $addClass = (element, classNames) =>
+  element.classList.add(...classNames)

@@ -1,22 +1,27 @@
-import Keyboard from './Keyboard.js'
-import Board from './Board.js'
+import Keyboard from './Keyboard'
+import Board from './Board'
 import utils from './utils'
-import Stats from './Stats.js'
-import StatsUI from './StatsUI.js'
-import Setting from './Setting.js'
+import Stats from './Stats'
+import StatsUI from './StatsUI'
+import Setting from './Setting'
+import {
+  loadAccessibilityMode,
+  loadColorblindMode,
+  loadDarkMode,
+} from './utils/loadSettings'
 const { $ } = utils
 
 export const settings = {
-  accessibility: false
+  accessibility: false,
 }
 
 const board = new Board({})
 const statsUI = new StatsUI()
 const stats = new Stats()
 
-statsUI.setPlayed({ played: stats.getPlayedMatches() })
-statsUI.setWinRate({ winRate: stats.getWinRate() })
-statsUI.setFavoriteWords({ favoriteWords: stats.getFavoriteWords() })
+statsUI.setPlayed(stats.getPlayedMatches())
+statsUI.setWinRate(stats.getWinRate())
+statsUI.setFavoriteWords(stats.getFavoriteWords())
 
 const keyboard = new Keyboard()
 
@@ -89,46 +94,17 @@ const settingsList = $('.settingsList').childNodes
 
 const LIST_ITEM_TAGNAME = 'LI'
 
-settingsList.forEach(el => {
+settingsList.forEach((el) => {
   if (el.tagName === LIST_ITEM_TAGNAME && el.id !== 'notoggle') {
     const label = el.firstElementChild
 
     const setting = new Setting(el.id, label)
-
-    switch (el.id) {
-      case 'darkModeItem':
-        setting.onLoad(isChecked => isChecked && setDarkMode(isChecked))
-        setting.onToggle(setDarkMode)
-        break
-      case 'colorblindItem':
-        setting.onLoad(isChecked => isChecked && setColorblindMode(isChecked))
-        setting.onToggle(setColorblindMode)
-        break
-      case 'accessibilityItem':
-        setting.onLoad(isChecked => {
-          settings.accessibility = isChecked
-          isChecked && setAccessibilityMode(isChecked)
-        })
-        setting.onToggle(isChecked => {
-          settings.accessibility = isChecked
-          setAccessibilityMode(isChecked)
-        })
-        break
+    const CASES = {
+      darkModeItem: loadDarkMode,
+      colorblindItem: loadColorblindMode,
+      accessibilityItem: loadAccessibilityMode,
     }
+
+    CASES[el.id](setting)
   }
 })
-
-function setDarkMode(value) {
-  const html = $('html')
-  html.toggleAttribute('data-theme', value)
-}
-
-function setColorblindMode(value) {
-  const html = $('html')
-  html.toggleAttribute('data-scheme', value)
-}
-
-function setAccessibilityMode(value) {
-  const html = $('html')
-  html.toggleAttribute('data-accessibility', value)
-}

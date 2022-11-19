@@ -10834,5 +10834,5 @@ export default [
   'mojel',
   'echen',
   'penas',
-  'roman'
+  'roman',
 ]

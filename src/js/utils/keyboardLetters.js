@@ -9,7 +9,7 @@ export default [
     { letter: 'u', id: 6 },
     { letter: 'i', id: 7 },
     { letter: 'o', id: 8 },
-    { letter: 'p', id: 9 }
+    { letter: 'p', id: 9 },
   ],
   [
     { letter: 'a', id: 10 },
@@ -21,7 +21,7 @@ export default [
     { letter: 'j', id: 16 },
     { letter: 'k', id: 17 },
     { letter: 'l', id: 18 },
-    { letter: 'ñ', id: 19 }
+    { letter: 'ñ', id: 19 },
   ],
   [
     { letter: 'Enviar', id: 20 },
@@ -31,6 +31,6 @@ export default [
     { letter: 'v', id: 24 },
     { letter: 'b', id: 25 },
     { letter: 'n', id: 26 },
-    { letter: 'm', id: 27 }
-  ]
+    { letter: 'm', id: 27 },
+  ],
 ]

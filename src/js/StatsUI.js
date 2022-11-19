@@ -5,12 +5,12 @@ const { $ } = utils
 export default class StatsUI {
   constructor() {}
 
-  setPlayed({ played }) {
+  setPlayed(played) {
     const playedElement = $('#played')
     playedElement.innerText = played
   }
 
-  setWinRate({ winRate }) {
+  setWinRate(winRate) {
     const playedElement = $('#winRate')
     playedElement.innerText = `${winRate}%`
   }
@@ -42,7 +42,7 @@ export default class StatsUI {
     stats.classList.add('statsContainerActive')
   }
 
-  setFavoriteWords({ favoriteWords }) {
+  setFavoriteWords(favoriteWords) {
     if (favoriteWords.length === 0) return
 
     const favoriteWordsWrapper = $('.favoriteWordsWrapper')
@@ -60,7 +60,10 @@ export default class StatsUI {
     statsTitle.innerText = 'Palabras favoritas'
 
     favoriteWords.forEach((word, index) => {
-      const favoriteWordElement = this.createFavoriteWordElement({ word, index })
+      const favoriteWordElement = this.createFavoriteWordElement({
+        word,
+        index,
+      })
       favoriteWordsContainer.appendChild(favoriteWordElement)
     })
 

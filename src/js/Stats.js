@@ -42,23 +42,27 @@ export default class Stats {
   getHistory() {
     const HISTORY = 'history'
 
-    return window.localStorage.getItem(HISTORY) ? JSON.parse(window.localStorage.getItem(HISTORY)) : []
+    return window.localStorage.getItem(HISTORY)
+      ? JSON.parse(window.localStorage.getItem(HISTORY))
+      : []
   }
 
   getPlayedMatches() {
     const history = this.getHistory()
-    const playedMatches = history.filter(match => match.hasWon || isBoardFull({ board: match.board }))
+    const playedMatches = history.filter(
+      (match) => match.hasWon || isBoardFull({ board: match.board })
+    )
     return playedMatches.length
   }
 
   getWinRate() {
     const history = this.getHistory()
-    const wins = history.filter(match => match.hasWon).length
+    const wins = history.filter((match) => match.hasWon).length
     const played = history.length
 
     const winRate = (wins / played) * 100
 
-    const isEven = number => number % 2 === 0
+    const isEven = (number) => number % 2 === 0
 
     return isNaN(winRate) ? 0 : winRate.toFixed(isEven(winRate) ? 0 : 1)
   }
@@ -101,7 +105,16 @@ export default class Stats {
   setPlayedMatch({ board, word, hasWon }) {
     const history = this.getHistory()
 
-    const newHistory = [...history, { id: this.generateId(), date: new Date(), board, wordOfTheDay: word, hasWon }]
+    const newHistory = [
+      ...history,
+      {
+        id: this.generateId(),
+        date: new Date(),
+        board,
+        wordOfTheDay: word,
+        hasWon,
+      },
+    ]
 
     window.localStorage.setItem('history', JSON.stringify(newHistory))
   }
@@ -114,7 +127,7 @@ export default class Stats {
 
     const { id } = lastGame
 
-    const newHistory = history.map(match => {
+    const newHistory = history.map((match) => {
       if (match.id === id) {
         const newHasWon = hasWon !== undefined ? hasWon : match.hasWon
         return { ...match, board, hasWon: newHasWon }
@@ -141,12 +154,14 @@ export default class Stats {
     const secondsBetweenDays = tomorrow.getTime() - today.getTime()
 
     const hours = Math.floor(secondsBetweenDays / (1000 * 60 * 60))
-    const minutes = Math.floor((secondsBetweenDays % (1000 * 60 * 60)) / (1000 * 60))
+    const minutes = Math.floor(
+      (secondsBetweenDays % (1000 * 60 * 60)) / (1000 * 60)
+    )
     const seconds = Math.floor((secondsBetweenDays % (1000 * 60)) / 1000)
 
-    const time = `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${
-      seconds < 10 ? '0' + seconds : seconds
-    }`
+    const time = `${hours < 10 ? '0' + hours : hours}:${
+      minutes < 10 ? '0' + minutes : minutes
+    }:${seconds < 10 ? '0' + seconds : seconds}`
 
     return time
   }
