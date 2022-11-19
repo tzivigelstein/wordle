@@ -15,7 +15,7 @@ export default class StatsUI {
     playedElement.innerText = `${winRate}%`
   }
 
-  setWordOfTheDay({ word }) {
+  setWordOfTheDay(word) {
     const wordOfTheDayContainer = $('.wordOfTheDayContainer')
 
     const wordOfTheDayElement = this.createWordOfTheDayElement({ word })

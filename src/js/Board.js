@@ -69,7 +69,7 @@ export default class Board {
       const history = this.stats.getHistory()
       const lastBoard = history[history.length - 1].board
       this.board = lastBoard
-      this.statsUI.setWordOfTheDay({ word: this.word })
+      this.statsUI.setWordOfTheDay(this.word)
       //TODO refactor to an async interval
       setInterval(() => {
         this.statsUI.setNextWordTimer({ time: this.stats.getNextWordTime() })
@@ -254,12 +254,10 @@ export default class Board {
         })
       }
 
-      this.statsUI.setPlayed({ played: this.stats.getPlayedMatches() })
-      this.statsUI.setWinRate({ winRate: this.stats.getWinRate() })
-      this.statsUI.setWordOfTheDay({ word: this.word })
-      this.statsUI.setFavoriteWords({
-        favoriteWords: this.stats.getFavoriteWords(),
-      })
+      this.statsUI.setPlayed(this.stats.getPlayedMatches())
+      this.statsUI.setWinRate(this.stats.getWinRate())
+      this.statsUI.setWordOfTheDay(this.word)
+      this.statsUI.setFavoriteWords(this.stats.getFavoriteWords())
 
       setInterval(() => {
         this.statsUI.setNextWordTimer({ time: this.stats.getNextWordTime() })
