@@ -1,6 +1,6 @@
 import { deleteButtonSVG } from "./deleteButtonSVG.js";
 import utils from "./utils/index.js";
-import keyboardLetters from "./keyboardLetters.js";
+import keyboardLetters from "./utils/keyboardLetters.js";
 import { $addClass } from "./utils/dom.js";
 
 const { $, $$ } = utils;
