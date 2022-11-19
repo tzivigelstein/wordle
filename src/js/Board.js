@@ -15,7 +15,7 @@ export default class Board {
     this.rowSize = size + 1
     this.board = []
     this.words = dictionary
-    this.word = getWordOfTheDay(this.words)
+    this.word = getWordOfTheDay()
     this.pointer = [0, 0]
 
     this.correctLetters = []
@@ -105,9 +105,7 @@ export default class Board {
     this.board.forEach(row => {
       row.forEach(letter => {
         if (this.isValidLetter(letter)) {
-          const compareWords = { firstWord: row, secondWord: this.word.split('') }
-
-          const repeatedLettersIndexes = getRepeatedLettersIndexes(compareWords)
+          const repeatedLettersIndexes = getRepeatedLettersIndexes(row ,this.word)
           row.forEach((letter, index) => {
             const isIncluded = this.word.split('').includes(letter)
             const equalIndex = repeatedLettersIndexes.includes(index)
@@ -188,12 +186,10 @@ export default class Board {
     }
 
     //Check that the word has the correct letters
-    const userWordLetters = userWord.split('')
-    const wordLetters = this.word.split('')
+    const userWordLetters = userWord.split("")
+    const wordLetters = this.word
 
-    const comparingWords = { firstWord: userWordLetters, secondWord: wordLetters }
-
-    const repeatedLettersIndexes = getRepeatedLettersIndexes(comparingWords)
+    const repeatedLettersIndexes = getRepeatedLettersIndexes(userWordLetters, wordLetters)
 
     userWordLetters.forEach((letter, index) => {
       const isIncluded = wordLetters.includes(letter)
