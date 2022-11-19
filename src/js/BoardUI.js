@@ -49,9 +49,9 @@ export default class BoardUI {
       row.forEach((letter, x) => {
         if (this.isValidLetter(letter)) {
           this.setLetter({ letter, position: { y, x } })
-          const compareWords = { firstWord: row, secondWord: this.word.split('') }
 
-          const repeatedLettersIndexes = getRepeatedLettersIndexes(compareWords)
+          const repeatedLettersIndexes = getRepeatedLettersIndexes(row, this.word)
+          
           row.forEach((letter, index) => {
             const isIncluded = this.word.split('').includes(letter)
             const equalIndex = repeatedLettersIndexes.includes(index)
