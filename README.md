@@ -11,5 +11,3 @@ Opens a browser automatically at [localhost:8080](http://localhost:8080)
 
 ### `npm run build`
 Runs the webpack build process. The final build directory is located at `./build`
-
-
