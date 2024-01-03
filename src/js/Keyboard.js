@@ -5,6 +5,17 @@ import { $addClassAndRemove } from './utils/dom.js'
 
 const { $, $$ } = utils
 
+const SPECIAL_CHARACTERS = {
+  BACKSPACE: {
+    id: 28,
+    name: "Backspace"
+  },
+  ENTER: {
+    id: 20,
+    name: "Enter"
+  }
+}
+
 export default class Keyboard {
   constructor() {
     this.keyboardElement = $('.keyboardContainer')
@@ -50,14 +61,22 @@ export default class Keyboard {
 
   initListener() {
     window.addEventListener('keydown', (e) => {
+      const { BACKSPACE, ENTER } = SPECIAL_CHARACTERS
+
       const key = e.key
-      const letter = document.querySelector(`[name="${key}"]`)
+      const lowerCasedKey = key.toLowerCase()
+      const letter = document.querySelector(`[name="${lowerCasedKey}"]`)
+
       if (letter) {
         letter.click()
-      } else if (key === 'Backspace') {
-        document.getElementById(28).click()
-      } else if (key === 'Enter') {
-        document.getElementById(20).click()
+      } else if (key === BACKSPACE.name && e.ctrlKey) {
+        for (let i = 0; i <= 5; i++) {
+          document.getElementById(BACKSPACE.id).click()
+        }
+      } else if (key === BACKSPACE.name) {
+        document.getElementById(BACKSPACE.id).click()
+      } else if (key === ENTER.name) {
+        document.getElementById(ENTER.id).click()
       }
     })
   }
