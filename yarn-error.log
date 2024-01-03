@@ -1,0 +1,60 @@
+Arguments: 
+  /home/tzivi/.nvm/versions/node/v18.18.2/bin/node /usr/share/yarn/bin/yarn.js add dotenv
+
+PATH: 
+  /home/tzivi/.fly/bin:/home/sammy/.local/bin:/home/tzivi/.fly/bin:/home/sammy/.local/bin:/home/tzivi/.fly/bin:/home/sammy/.local/bin:/home/tzivi/.nvm/versions/node/v18.18.2/bin:/home/tzivi/.fly/bin:/home/sammy/.local/bin:/home/tzivi/.cargo/bin:/home/tzivi/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/tzivi/Android/Sdk/emulator:/home/tzivi/Android/Sdk/platform-tools:/home/tzivi/Android/Sdk/emulator:/home/tzivi/Android/Sdk/platform-tools:/home/tzivi/Android/Sdk/emulator:/home/tzivi/Android/Sdk/platform-tools:/home/tzivi/Android/Sdk/emulator:/home/tzivi/Android/Sdk/platform-tools
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.18.2
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: connect EHOSTUNREACH 2606:4700::6810:123:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+
+npm manifest: 
+  {
+    "name": "wordle",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "type": "module",
+    "scripts": {
+      "dev": "webpack serve --mode=development",
+      "build": "webpack --config webpack.config.js",
+      "test:unit": "NODE_OPTIONS=--experimental-vm-modules jest test/unit",
+      "prettier:write": "prettier --write \"**/*.{js,json,css}\""
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/tzivigelstein/wordle.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/tzivigelstein/wordle/issues"
+    },
+    "homepage": "https://github.com/tzivigelstein/wordle#readme",
+    "devDependencies": {
+      "babel-loader": "9.1.0",
+      "copy-webpack-plugin": "10.2.4",
+      "html-webpack-plugin": "5.5.0",
+      "jest": "29.3.1",
+      "prettier": "2.7.1",
+      "webpack": "5.68.0",
+      "webpack-cli": "4.9.2",
+      "webpack-dev-server": "4.7.4"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

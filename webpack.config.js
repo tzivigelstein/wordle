@@ -1,5 +1,7 @@
+import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
+import Dotenv from 'dotenv-webpack'
 
 const { pathname: source } = new URL('src', import.meta.url)
 const { pathname: build } = new URL('build', import.meta.url)
@@ -43,5 +45,6 @@ export default {
         { from: 'src/styles/settings.css', to: 'styles/settings.css' },
       ],
     }),
+    new Dotenv(),
   ],
 }
