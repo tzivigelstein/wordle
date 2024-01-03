@@ -12,3 +12,7 @@ export const $ = (param) => document.querySelector(param)
 export const $$ = (param) => document.querySelectorAll(param)
 export const $addClass = (element, classNames) =>
   element.classList.add(...classNames)
+export const $addClassAndRemove = (element, addClassNames, removeClassNames) => {
+  element.classList.add(...addClassNames)
+  element.classList.remove(...removeClassNames)
+}

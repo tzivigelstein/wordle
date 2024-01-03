@@ -1,7 +1,7 @@
 import { deleteButtonSVG } from './deleteButtonSVG.js'
 import utils from './utils/index.js'
 import keyboardLetters from './utils/keyboardLetters.js'
-import { $addClass } from './utils/dom.js'
+import { $addClassAndRemove } from './utils/dom.js'
 
 const { $, $$ } = utils
 
@@ -79,11 +79,11 @@ export default class Keyboard {
       const { innerHTML } = letter
 
       if (correctLetters.includes(innerHTML)) {
-        $addClass(letter, ['correctKeyboardLetter'])
+        $addClassAndRemove(letter, ['correctKeyboardLetter'], ["wrongKeyboardLetter", "almostCorrectKeyboardLetter"])
       } else if (almostCorrectLetters.includes(innerHTML)) {
-        $addClass(letter, ['almostCorrectKeyboardLetter'])
+        $addClassAndRemove(letter, ['almostCorrectKeyboardLetter'], ["wrongKeyboardLetter", "correctKeyboardLetter"])
       } else if (wrongLetters.includes(innerHTML)) {
-        $addClass(letter, ['wrongKeyboardLetter'])
+        $addClassAndRemove(letter, ['wrongKeyboardLetter'], ["correctKeyboardLetter", "almostCorrectKeyboardLetter"])
       }
     })
   }
