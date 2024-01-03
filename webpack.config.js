@@ -10,7 +10,7 @@ export default {
   devServer: {
     watchFiles: source,
     port: 8080,
-    open: true,
+    open: false,
     liveReload: true,
   },
   entry: './src/js/main.js',
