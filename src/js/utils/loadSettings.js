@@ -25,3 +25,7 @@ export const loadAccessibilityMode = (setting) => {
     setAccessibilityMode(isChecked)
   })
 }
+
+export const deleteLocalStorage = (setting) => {
+  setting.onClick(setting.deleteLocalStorage)
+}

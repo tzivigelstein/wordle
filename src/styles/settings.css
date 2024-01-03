@@ -83,3 +83,19 @@
 .footerText a {
   color: var(--text-color-light);
 }
+
+.developmentOptionsTitle {
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+#deleteLocalStorage button {
+  text-align: left;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  padding: 1rem 0 0.75rem 0;
+  font-size: 1rem;
+}

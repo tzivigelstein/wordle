@@ -1,12 +1,27 @@
+export const TYPES = {
+  TOGGLE: "toggle",
+  BUTTON: "button"
+}
+
 export default class Setting {
-  constructor(id, el) {
-    this.id = id
-    this.isChecked = this.getInitialState()
+  constructor(type, el) {
+    this.type = type
     this.el = el
+    this.type = type
+
+    if (type === TYPES.TOGGLE) {
+      this.isChecked = this.getInitialState()
+    }
+
+    window.localStorage.setItem("hasPlayedBefore", true)
+  }
+
+  deleteLocalStorage() {
+    window.localStorage.removeItem("history")
   }
 
   getInitialState() {
-    return window.localStorage.getItem(this.id) === 'true'
+    return window.localStorage.getItem(this.type) === 'true'
   }
 
   toggleChecked(isChecked, config = { save: true }) {
@@ -17,7 +32,7 @@ export default class Setting {
   }
 
   saveToLocalStorage() {
-    window.localStorage.setItem(this.id, this.isChecked)
+    window.localStorage.setItem(this.type, this.isChecked)
   }
 
   setInputActive(params) {
@@ -39,6 +54,12 @@ export default class Setting {
       const isCheked = this.setInputActive()
       this.toggleChecked(isCheked, config)
       callback(this.isChecked)
+    })
+  }
+
+  onClick(callback) {
+    this.el.addEventListener("click", () => {
+      callback()
     })
   }
 

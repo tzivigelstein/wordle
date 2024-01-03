@@ -3,11 +3,12 @@ import Board from './Board'
 import utils from './utils'
 import Stats from './Stats'
 import StatsUI from './StatsUI'
-import Setting from './Setting'
+import Setting, { TYPES } from './Setting'
 import {
   loadAccessibilityMode,
   loadColorblindMode,
   loadDarkMode,
+  deleteLocalStorage
 } from './utils/loadSettings'
 const { $ } = utils
 
@@ -50,7 +51,7 @@ const footerButton = $('.footerButton')
 
 const history = stats.getHistory()
 
-if (history.length === 0) {
+if (history.length === 0 && !localStorage.getItem("hasPlayedBefore")) {
   rulesContainer.classList.add('rulesContainerActive')
 }
 
@@ -95,16 +96,29 @@ const settingsList = $('.settingsList').childNodes
 const LIST_ITEM_TAGNAME = 'LI'
 
 settingsList.forEach((el) => {
-  if (el.tagName === LIST_ITEM_TAGNAME && el.id !== 'notoggle') {
-    const label = el.firstElementChild
+  if (el.tagName !== LIST_ITEM_TAGNAME || el.id === "notoggle")
+    return
 
-    const setting = new Setting(el.id, label)
+  const id = el.id
+  const role = el.getAttribute("data-role")
+  const clickable = el.firstElementChild
+  const setting = new Setting(role, clickable)
+
+  if (role === TYPES.TOGGLE) {
     const CASES = {
       darkModeItem: loadDarkMode,
       colorblindItem: loadColorblindMode,
       accessibilityItem: loadAccessibilityMode,
     }
 
-    CASES[el.id](setting)
+    CASES[id](setting)
+  }
+
+  if (role === TYPES.BUTTON) {
+    const CASES = {
+      deleteLocalStorage,
+    }
+
+    CASES[id](setting)
   }
 })

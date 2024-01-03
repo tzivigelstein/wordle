@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" type="image/png" href="./assets/wordle_logo_32x32.png" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="./assets/wordle_logo_32x32.png"
+    />
     <link rel="stylesheet" href="./styles/styles.css" />
     <link rel="stylesheet" href="./styles/game.css" />
     <link rel="stylesheet" href="./styles/rules.css" />
@@ -18,7 +22,13 @@
         <header class="header">
           <nav class="headerNav">
             <button id="rulesButton" class="headerButton">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" class="headerIcon">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+                class="headerIcon"
+              >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -91,9 +101,12 @@
         </button>
         <h3 class="rulesTitle">Cómo jugar</h3>
         <p class="text">Adivina la plabra oculta en seis intentos.</p>
-        <p class="text">Cada intento debe ser una palabra válida de 5 letras.</p>
         <p class="text">
-          Despues de cada intento el color de las letras cambia para mostrar qué tan cerca estás de acertar la palabra.
+          Cada intento debe ser una palabra válida de 5 letras.
+        </p>
+        <p class="text">
+          Despues de cada intento el color de las letras cambia para mostrar qué
+          tan cerca estás de acertar la palabra.
         </p>
         <p class="subtitle textBold">Ejemplos</p>
         <div>
@@ -114,7 +127,10 @@
               <span class="cellText">S</span>
             </div>
           </div>
-          <p>La letra <span class="textBold">G</span> está en la palabra y en la posición correcta.</p>
+          <p>
+            La letra <span class="textBold">G</span> está en la palabra y en la
+            posición correcta.
+          </p>
         </div>
         <div>
           <div style="display: flex; align-items: center; gap: 0.25rem">
@@ -134,7 +150,10 @@
               <span class="cellText">L</span>
             </div>
           </div>
-          <p>La letra <span class="textBold">C</span> está en la palabra pero no en la posición correcta.</p>
+          <p>
+            La letra <span class="textBold">C</span> está en la palabra pero no
+            en la posición correcta.
+          </p>
         </div>
         <div>
           <div style="display: flex; align-items: center; gap: 0.25rem">
@@ -156,7 +175,10 @@
           </div>
           <p>La letra <span class="textBold">O</span> no está en la palabra.</p>
         </div>
-        <p class="text">Puede haber letras repetidas. Las pistas son independientes para cada letra.</p>
+        <p class="text">
+          Puede haber letras repetidas. Las pistas son independientes para cada
+          letra.
+        </p>
         <footer class="footer">
           <p class="textBold">¡Una palabra nueva cada día!</p>
           <button class="footerButton">¡Jugar!</button>
@@ -215,48 +237,83 @@
         </button>
         <h3 class="settingsTitle">Opciones</h3>
         <ul class="settingsList">
-          <li id="darkModeItem">
+          <li id="darkModeItem" data-role="toggle">
             <label for="darkMode" class="settingContainer">
               <span class="settingTitle">Modo oscuro</span>
               <input id="darkMode" type="checkbox" class="hiddenInput" />
               <label for="darkMode" id="darkModeButton" class="settingButton">
-                <span id="darkModeButtonCircle" class="settingButtonCircle"></span>
+                <span
+                  id="darkModeButtonCircle"
+                  class="settingButtonCircle"
+                ></span>
               </label>
             </label>
           </li>
-          <li id="colorblindItem">
+          <li id="colorblindItem" data-role="toggle">
             <label for="colorblind" class="settingContainer">
               <span class="settingTitle">Modo para daltónicos</span>
               <input id="colorblind" type="checkbox" class="hiddenInput" />
-              <label for="colorblind" id="colorblindButton" class="settingButton">
-                <span id="colorblindButtonCircle" class="settingButtonCircle"></span>
+              <label
+                for="colorblind"
+                id="colorblindButton"
+                class="settingButton"
+              >
+                <span
+                  id="colorblindButtonCircle"
+                  class="settingButtonCircle"
+                ></span>
               </label>
             </label>
           </li>
-          <li id="accessibilityItem">
+          <li id="accessibilityItem" data-role="toggle">
             <label for="accessibility" class="settingContainer">
               <div>
                 <span class="settingTitle">Ayudas para accesibilidad</span>
-                <p class="settingHelper">Dar click en las letras muestra el estado. Letras más grandes.</p>
+                <p class="settingHelper">
+                  Dar click en las letras muestra el estado. Letras más grandes.
+                </p>
               </div>
               <input id="accessibility" type="checkbox" class="hiddenInput" />
-              <label for="accessibility" id="accessibilityButton" class="settingButton">
-                <span id="accessibilityButtonCircle" class="settingButtonCircle"></span>
+              <label
+                for="accessibility"
+                id="accessibilityButton"
+                class="settingButton"
+              >
+                <span
+                  id="accessibilityButtonCircle"
+                  class="settingButtonCircle"
+                ></span>
               </label>
             </label>
+          </li>
+          <p class="developmentOptionsTitle">Opciones de desarrollo</p>
+          <li id="deleteLocalStorage" class="settingContainer" data-role="button">
+            <button>Borrar memoria</button>
           </li>
           <li id="notoggle" class="settingContainer">
             <span class="settingTitle">Contacto</span>
             <p class="linksContainer">
-              <a target="_blank" rel="noopener noreferrer" href="https://www.twitter.com/tzivigelstein">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.twitter.com/tzivigelstein"
+              >
                 <span>Twitter</span>
               </a>
               <span>|</span>
-              <a target="_blank" rel="noopener noreferrer" href="https://www.tzivi.com">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.tzivi.com"
+              >
                 <span>Sitio web</span>
               </a>
               <span>|</span>
-              <a target="_blank" rel="noopener noreferrer" href="https://www.github.com/tzivigelstein/wordle">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.github.com/tzivigelstein/wordle"
+              >
                 <span>Repositorio</span>
               </a>
             </p>
@@ -265,11 +322,19 @@
         <footer>
           <p class="footerText">
             Adaptación de
-            <a target="_blank" rel="noopener noreferrer" href="https://www.nytimes.com/games/wordle/index.html"
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.nytimes.com/games/wordle/index.html"
               >Wordle</a
             >
             de
-            <a target="_blank" rel="noopener noreferrer" href="https://www.powerlanguage.co.uk/">Josh Wardle</a>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.powerlanguage.co.uk/"
+              >Josh Wardle</a
+            >
           </p>
         </footer>
       </section>
