@@ -1,3 +1,3 @@
 export default {
-  isDevelopment: process.env.ENV,
+  isDevelopment: process.env.ENV === "development",
 }

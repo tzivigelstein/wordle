@@ -10,6 +10,9 @@ import {
   loadDarkMode,
   deleteLocalStorage
 } from './utils/loadSettings'
+import env from './utils/env'
+
+const { isDevelopment } = env
 const { $ } = utils
 
 export const settings = {
@@ -111,14 +114,22 @@ settingsList.forEach((el) => {
       accessibilityItem: loadAccessibilityMode,
     }
 
-    CASES[id](setting)
+    const caseForId = CASES[id]
+    if (caseForId) caseForId(setting)
   }
 
   if (role === TYPES.BUTTON) {
-    const CASES = {
-      deleteLocalStorage,
+    const CASES = {}
+
+    if (isDevelopment) {
+      CASES.deleteLocalStorage = deleteLocalStorage
+    } else {
+      const developmentElements = document.querySelectorAll("[data-env='development']")
+      developmentElements.forEach(element => element.remove())
     }
 
-    CASES[id](setting)
+    const caseForId = CASES[id]
+
+    if (caseForId) caseForId(setting)
   }
 })
