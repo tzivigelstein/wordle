@@ -4,6 +4,7 @@ import utils from './utils/index.js'
 import BoardUI from './BoardUI.js'
 import Stats from './Stats.js'
 import StatsUI from './StatsUI.js'
+import confetti from 'canvas-confetti'
 
 const { getWordOfTheDay, isBoardFull, getRepeatedLettersIndexes } = utils
 
@@ -65,10 +66,18 @@ export default class Board {
   }
 
   populateBoard() {
+    const history = this.stats.getHistory()
+    const lastEntry = history[history.length - 1]
+    const lastBoard = lastEntry.board
+    this.board = lastBoard
+
+    const currentDate = new Date()
+    const boardDateWithoutTime = new Date(lastEntry.date)
+    boardDateWithoutTime.setHours(0, 0, 0, 0)
+
+    const boardHasExpired = currentDate.getTime() > boardDateWithoutTime.getTime()
+
     if (this.finished) {
-      const history = this.stats.getHistory()
-      const lastBoard = history[history.length - 1].board
-      this.board = lastBoard
       this.statsUI.setWordOfTheDay(this.word)
       //TODO refactor to an async interval
       setInterval(() => {
@@ -78,10 +87,7 @@ export default class Board {
       this.setKeyboardLettersStatus()
 
       this.boardUI.populateBoard({ board: lastBoard })
-    } else if (!this.finished && this.started) {
-      const history = this.stats.getHistory()
-      const lastBoard = history[history.length - 1].board
-      this.board = lastBoard
+    } else if (!this.finished && this.started && !boardHasExpired) {
       this.boardUI.populateBoard({ board: lastBoard })
 
       this.setKeyboardLettersStatus()
@@ -267,6 +273,7 @@ export default class Board {
     if (this.isWordCorrect({ userWord })) {
       this.boardUI.setCorrectRow({ position: { y } })
       this.boardUI.openStatsPage()
+      confetti()
 
       return
     }
