@@ -34,7 +34,16 @@ export default class Stats {
     const lastIndex = history.length - 1
     const lastGame = history[lastIndex]
 
-    const { board, hasWon } = lastGame
+    const { board, hasWon, date } = lastGame
+
+    const currentDate = new Date()
+    currentDate.setHours(0, 0, 0, 0)
+    const boardDateWithoutTime = new Date(date)
+    boardDateWithoutTime.setHours(0, 0, 0, 0)
+
+    const boardIsNotFromToday = currentDate.getTime() !== boardDateWithoutTime.getTime()
+
+    if (boardIsNotFromToday) return false
 
     return !isBoardFull({ board }) && !hasWon
   }
@@ -159,9 +168,8 @@ export default class Stats {
     )
     const seconds = Math.floor((secondsBetweenDays % (1000 * 60)) / 1000)
 
-    const time = `${hours < 10 ? '0' + hours : hours}:${
-      minutes < 10 ? '0' + minutes : minutes
-    }:${seconds < 10 ? '0' + seconds : seconds}`
+    const time = `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes
+      }:${seconds < 10 ? '0' + seconds : seconds}`
 
     return time
   }
