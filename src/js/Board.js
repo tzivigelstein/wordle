@@ -68,16 +68,22 @@ export default class Board {
   populateBoard() {
     const history = this.stats.getHistory()
     const lastEntry = history[history.length - 1]
-    const lastBoard = lastEntry.board
-    this.board = lastBoard
+    const lastBoard = lastEntry?.board
 
-    const currentDate = new Date()
-    const boardDateWithoutTime = new Date(lastEntry.date)
-    boardDateWithoutTime.setHours(0, 0, 0, 0)
+    let boardHasExpired = false
 
-    const boardHasExpired = currentDate.getTime() > boardDateWithoutTime.getTime()
+    if (lastBoard) {
+      const currentDate = new Date()
+      currentDate.setHours(0, 0, 0, 0)
+      const boardDateWithoutTime = new Date(lastEntry.date)
+      boardDateWithoutTime.setHours(0, 0, 0, 0)
+
+      boardHasExpired = currentDate.getTime() > boardDateWithoutTime.getTime()
+    }
+
 
     if (this.finished) {
+      this.board = lastBoard
       this.statsUI.setWordOfTheDay(this.word)
       //TODO refactor to an async interval
       setInterval(() => {
@@ -88,6 +94,7 @@ export default class Board {
 
       this.boardUI.populateBoard({ board: lastBoard })
     } else if (!this.finished && this.started && !boardHasExpired) {
+      this.board = lastBoard
       this.boardUI.populateBoard({ board: lastBoard })
 
       this.setKeyboardLettersStatus()
